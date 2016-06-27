@@ -12,7 +12,9 @@ colorscheme atom-dark
 set t_CO=256								"Use 256 colors. Useful for terminal Vim
 set number								"Set line numbers
 set linespace=12							"Mac-vim specific line height
-set guifont=Fira_Code:h12
+set guifont=Fira_Code:h12						"For mac-vim
+set macligatures							"For pretty symbols, when available
+set guioptions-=e							"No gui tabs
 
 set guioptions-=l							"Remove vertical scroll bars on left and right
 set guioptions-=L
@@ -45,6 +47,19 @@ nmap <Leader>n :NERDTreeToggle<cr>
 
 nmap <C-R> :CtrlPBufTag<cr>
 nmap <D-e> :CtrlPMRUFiles<cr>
+
+"---------------------------Plugins---------------"
+
+"/
+"/ CtrlP
+"
+let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
+
+"/
+"/ NERDTree
+"
+let NERDTreeHijackNetrw = 0
 
 "---------------------------Auto-Commands---------------"
 
