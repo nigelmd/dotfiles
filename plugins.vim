@@ -10,6 +10,8 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'rking/ag.vim'
+Plugin 'skwp/greplace.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
