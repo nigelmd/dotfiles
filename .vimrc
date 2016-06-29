@@ -10,8 +10,7 @@ let mapleader= ','							                    "Default leader is \, but comma is 
 "---------------------------Visuals--------------------"
 colorscheme atom-dark
 set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
-set nonumber                                                    "Set line numbers
-set linespace=12							                    "Mac-vim specific line height
+set number                                                      "Set line numbers
 
 set guioptions-=l							                    "Remove vertical scroll bars on left and right
 set guioptions-=L
@@ -22,10 +21,10 @@ set guioptions-=R
 "hi LineNr ctermbg=black                                             
 
 "Set padding on left for each window
-set foldcolumn=2                                               "Set only if not using linenumbers
+"set foldcolumn=2                                               "Set only if not using linenumbers
 
 "Set padding background to be equal to background color
-hi foldcolumn ctermbg=black
+"hi foldcolumn ctermbg=black
 
 "Set vertical split to not have gray foreground, just dotted lines as white
 hi vertsplit ctermfg=black ctermbg=white
@@ -96,6 +95,11 @@ augroup autosourcing
 	autocmd!
     autocmd BufWritePost .vimrc source %
 augroup END
+
+"----------------------Commands-------------------------"
+
+command Bd bp\|bd \#
+
 
 "Always source gvimrc last, or after all non-gui specific settings
 so ~/.gvimrc
