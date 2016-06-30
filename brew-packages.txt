@@ -1,11 +1,13 @@
 caskroom/cask/brew-cask
 cmatrix
 homebrew/php/composer
+ctags
 dnsmasq
 exercism
 git
 gmp
 htop-osx
+imagemagick
 keybase
 libmemcached
 mongodb
@@ -20,6 +22,7 @@ ruby
 sbt
 scala
 sisc-scheme
+the_silver_searcher
 vim
 wget
 homebrew/dupes/zlib
