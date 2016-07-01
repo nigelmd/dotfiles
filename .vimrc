@@ -11,6 +11,7 @@ let mapleader= ','							                    "Default leader is \, but comma is 
 colorscheme atom-dark
 set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
 set number                                                      "Set line numbers
+set complete=.,w,b,u                                            "Set the desired autocompletion
 
 set guioptions-=l							                    "Remove vertical scroll bars on left and right
 set guioptions-=L
@@ -98,8 +99,7 @@ augroup END
 
 "----------------------Commands-------------------------"
 
-command Bd bp\|bd \#
-
+command! Bd bp\|bd \#
 
 "Always source gvimrc last, or after all non-gui specific settings
 so ~/.gvimrc
@@ -116,3 +116,5 @@ imap jj <Esc>
 " - c,v,d + a + i and any character pair, will change, highlight or delete, but
 "   including the character pair
 " - Ctrl] for going to method when cursor is on method
+" - C-o for making current buffer fullscreen
+" - Shift-j joins the line below to the current line

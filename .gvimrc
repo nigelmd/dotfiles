@@ -3,6 +3,7 @@ if has("gui_macvim")
 	macmenu &File.Print key=<nop>
 	set guifont=Fira_Code:h12						            "For mac-vim
     set macligatures							                "For pretty symbols, when available
+    nmap <Leader>o :PeepOpen<cr>                                "Use peepopen to open files
 endif
 
 "---------------------------Visuals--------------------"
