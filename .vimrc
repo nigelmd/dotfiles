@@ -8,7 +8,13 @@ set backspace=indent,eol,start						            "Backspace enabled like other ed
 let mapleader= ','							                    "Default leader is \, but comma is much easier to access
 
 "---------------------------Visuals--------------------"
-colorscheme atom-dark
+if has('gui_running')                                           "Use atom-dark only if no gui
+    set background=dark
+    colorscheme atom-dark
+else
+    colorscheme brogrammer                                      "marciomazza/vim-brogrammer-theme
+endif
+
 set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
 set number                                                      "Set line numbers
 set complete=.,w,b,u                                            "Set the desired autocompletion
@@ -66,14 +72,15 @@ nmap <Leader>ev :tabedit $MYVIMRC<cr>
 let g:ctrlp_custom_ignore = 'node_modules\DS_Store\|git'
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
 
-nmap <D-p> :CtrlP<cr>
+nmap <C-p> :CtrlP<cr>
 nmap <C-R> :CtrlPBufTag<cr>
-nmap <D-e> :CtrlPMRUFiles<cr>
+nmap <C-e> :CtrlPMRUFiles<cr>
 
 "/
 "/ NERDTree
 "
 let NERDTreeHijackNetrw = 0
+let NERDTreeIgnore=['\.pyc$', '\~$']                                "Ignore .pyc files
 
 "Easier NERDTree toggle
 nmap <Leader>n :NERDTreeToggle<cr>
@@ -89,13 +96,32 @@ nmap <Leader>f :tag<space>
 set grepprg=ag                                                  "Using Ag for search
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
+"/
+"/ Powerline
+"
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set laststatus=2
+set fillchars+=stl:\ ,stlnc:\
+set termencoding=utf-8
+
 "---------------------------Auto-Commands---------------"
 
 "Automatically source Vimrc file on save
 augroup autosourcing
 	autocmd!
     autocmd BufWritePost .vimrc source %
+    autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 augroup END
+
+if has("gui_running")
+   let s:uname = system("uname")
+   if s:uname == "Darwin\n"
+      set guifont=Inconsolata\ for\ Powerline:h15
+   endif
+endif
 
 "----------------------Commands-------------------------"
 
@@ -118,3 +144,4 @@ imap jj <Esc>
 " - Ctrl] for going to method when cursor is on method
 " - C-o for making current buffer fullscreen
 " - Shift-j joins the line below to the current line
+" - '0 takes you back to the same point of a file when you last closed vim
