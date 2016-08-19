@@ -10,11 +10,9 @@ let mapleader= ','							                    "Default leader is \, but comma is 
 "---------------------------Visuals--------------------"
 if has('gui_running')                                           "Use atom-dark only if no gui
     set background=dark
-    colorscheme atom-dark
-else
-    colorscheme brogrammer                                      "marciomazza/vim-brogrammer-theme
 endif
 
+colorscheme brogrammer                                          "marciomazza/vim-brogrammer-theme
 set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
 set number                                                      "Set line numbers
 set complete=.,w,b,u                                            "Set the desired autocompletion
@@ -35,12 +33,19 @@ set guioptions-=R
 
 "Set vertical split to not have gray foreground, just dotted lines as white
 hi vertsplit ctermfg=black ctermbg=white
+"
+"define BadWhitespace before using in a match
+highlight BadWhitespace ctermbg=red guibg=darkred
 
 set expandtab           						                "Spaces instead of tabs 
 set tabstop=4           						                "Use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        						                "Number of spaces for auto indent
 set autoindent          						                "Copy indent from current line when starting a new line
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
 
 "---------------------------Search--------------------"
 set hlsearch
@@ -80,7 +85,7 @@ nmap <C-e> :CtrlPMRUFiles<cr>
 "/ NERDTree
 "
 let NERDTreeHijackNetrw = 0
-let NERDTreeIgnore=['\.pyc$', '\~$']                                "Ignore .pyc files
+let NERDTreeIgnore=['\.pyc$', '\~$']                            "Ignore .pyc files
 
 "Easier NERDTree toggle
 nmap <Leader>n :NERDTreeToggle<cr>
@@ -107,6 +112,25 @@ set laststatus=2
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
+"/
+"/ SimplyFold
+"
+let g:SimpylFold_docstring_preview=1
+" Enable folding with the spacebar
+nnoremap <space> za
+
+"/
+"/ Syntastic
+"
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 "---------------------------Auto-Commands---------------"
 
 "Automatically source Vimrc file on save
@@ -115,6 +139,13 @@ augroup autosourcing
     autocmd BufWritePost .vimrc source %
     autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 augroup END
+
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 if has("gui_running")
    let s:uname = system("uname")
