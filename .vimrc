@@ -86,6 +86,7 @@ nmap <C-e> :CtrlPMRUFiles<cr>
 "
 let NERDTreeHijackNetrw = 0
 let NERDTreeIgnore=['\.pyc$', '\~$']                            "Ignore .pyc files
+let NERDTreeShowHidden=1
 
 "Easier NERDTree toggle
 nmap <Leader>n :NERDTreeToggle<cr>
@@ -122,6 +123,7 @@ nnoremap <space> za
 "/
 "/ Syntastic
 "
+set statusline=%f
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*

@@ -12,6 +12,6 @@ set linespace=12							                    "Mac-vim specific line height
 set guioptions-=e							                    "No gui tabs
 
 "Keep line numbers same color as bg
-hi LineNr guibg=bg                                              
-hi foldcolumn guibg=bg
-hi vertsplit guifg=bg guibg=white
+hi LineNr ctermbg=bg guibg=bg                                              
+hi foldcolumn ctermbg=bg guibg=bg
+hi vertsplit ctermfg=bg ctermbg=white guifg=bg guibg=white
