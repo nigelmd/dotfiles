@@ -32,6 +32,14 @@ function MyDiff()
   endif
 endfunction
 
+"Windows specific
+set backup
+set backupdir=C:\WINDOWS\Temp
+set backupskip=C:\WINDOWS\Temp\*
+set directory=C:\WINDOWS\Temp
+set undodir=C:\WINDOWS\Temp
+set writebackup
+
 set nocompatible              						            "Always fetch latest Vim settings, required for Vundle
 
 so $VIMRUNTIME/plugin/plugins.vim							                "Source the vundle configuration so it's read on startup
