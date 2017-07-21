@@ -13,7 +13,7 @@ if has('gui_running')                                           "Use atom-dark o
 endif
 
 colorscheme brogrammer                                          "marciomazza/vim-brogrammer-theme
-set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
+set t_Co=256								                    "Use 256 colors. Useful for terminal Vim
 set number                                                      "Set line numbers
 set complete=.,w,b,u                                            "Set the desired autocompletion
 
@@ -54,6 +54,9 @@ set incsearch								                    "Highlight and take cursor to word if f
 "Remove previous highlighted search
 nmap <Leader><space> :nohlsearch<cr>
 
+"Ignore case
+set ic
+
 "---------------------------Split--------------------"
 set splitbelow
 set splitright
@@ -68,10 +71,16 @@ nmap <C-L> <C-W><C-L>
 
 "Easy to edit vimrc
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
+
 "Quit insert mode and write to file
 imap ww <Esc>:w<cr>
 
 "---------------------------Plugins---------------"
+
+" Syntastic
+let g:syntastic_check_on_open = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
 
 "/
 "/ CtrlP
@@ -107,10 +116,10 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 "/ Powerline
 "
-set guifont=Inconsolata\ for\ Powerline:h15
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
-set t_Co=256
 set laststatus=2
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
