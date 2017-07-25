@@ -23,7 +23,7 @@ set guioptions-=r
 set guioptions-=R
 
 "Keep line numbers background same color as bg, use only if required
-"hi LineNr ctermbg=black                                             
+"hi LineNr ctermbg=black
 
 "Set padding on left for each window
 "set foldcolumn=2                                               "Set only if not using linenumbers
@@ -37,7 +37,7 @@ hi vertsplit ctermfg=black ctermbg=white
 "define BadWhitespace before using in a match
 highlight BadWhitespace ctermbg=red guibg=darkred
 
-set expandtab           						                "Spaces instead of tabs 
+set expandtab           						                "Spaces instead of tabs
 set tabstop=4           						                "Use 4 spaces to represent tab
 set softtabstop=4
 set shiftwidth=4        						                "Number of spaces for auto indent
@@ -125,6 +125,11 @@ set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
 "/
+"/ Airline
+"
+let g:airline_powerline_fonts = 1
+
+"/
 "/ SimplyFold
 "
 let g:SimpylFold_docstring_preview=1
@@ -132,9 +137,16 @@ let g:SimpylFold_docstring_preview=1
 nnoremap <space> za
 
 "/
+"/ VirtualEnv
+"
+let g:virtualenv_directory = '$HOME/venvs'
+let g:virtualenv_stl_format = '[ⓔ %n]'
+set statusline+=%{virtualenv#statusline()}
+
+"/
 "/ Syntastic
 "
-set statusline=%f
+set statusline+=%f
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -143,6 +155,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_cpp_compiler_options = ' --std=c++11'
+let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 
 "---------------------------Auto-Commands---------------"
 
@@ -174,7 +189,7 @@ command! Bd bp\|bd \#
 "Always source gvimrc last, or after all non-gui specific settings
 so ~/.gvimrc
 
-"Quick escape to normal mode 
+"Quick escape to normal mode
 imap jj <Esc>
 
 "Notes and tips
