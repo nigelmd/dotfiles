@@ -146,7 +146,7 @@ set statusline+=%{virtualenv#statusline()}
 "/
 "/ Syntastic
 "
-set statusline+=%f
+set statusline=%f
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
