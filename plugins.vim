@@ -24,6 +24,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'edkolev/tmuxline.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

@@ -140,7 +140,7 @@ nnoremap <space> za
 "/ VirtualEnv
 "
 let g:virtualenv_directory = '$HOME/venvs'
-let g:virtualenv_stl_format = '[ⓔ %n]'
+let g:virtualenv_stl_format = '(%n)'
 set statusline+=%{virtualenv#statusline()}
 
 "/
