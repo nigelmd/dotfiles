@@ -15,8 +15,8 @@ hi Visual ctermfg=NONE ctermbg=238 cterm=NONE guifg=NONE guibg=#444444 gui=NONE
 hi CursorLine ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#2f2f2f gui=NONE
 hi CursorColumn ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#2f2f2f gui=NONE
 hi ColorColumn ctermfg=NONE ctermbg=236 cterm=NONE guifg=NONE guibg=#2f2f2f gui=NONE
-hi LineNr ctermfg=244 ctermbg=232 cterm=NONE guifg=#838586 guibg=#101010 gui=NONE
-hi VertSplit ctermfg=240 ctermbg=233 cterm=NONE guifg=#575858 guibg=#101010 gui=NONE
+hi LineNr ctermfg=244 ctermbg=232 cterm=NONE guifg=#838586 guibg=#000000 gui=NONE
+hi VertSplit ctermfg=240 ctermbg=233 cterm=NONE guifg=#575858 guibg=#000000 gui=NONE
 hi MatchParen ctermfg=167 ctermbg=NONE cterm=underline guifg=#e74c3c guibg=NONE gui=underline
 hi StatusLine ctermfg=231 ctermbg=240 cterm=NONE guifg=#ecf0f1 guibg=#575858 gui=NONE
 hi StatusLineNC ctermfg=231 ctermbg=240 cterm=NONE guifg=#ecf0f1 guibg=#575858 gui=NONE
@@ -27,8 +27,8 @@ hi IncSearch term=reverse cterm=NONE ctermfg=16 ctermbg=39 gui=NONE guifg=#00000
 hi Directory ctermfg=62 ctermbg=NONE cterm=NONE guifg=#6c71c4 guibg=NONE gui=NONE
 hi Folded ctermfg=241 ctermbg=234 cterm=NONE guifg=#606060 guibg=#1a1a1a gui=NONE
 
-hi Normal ctermfg=231 ctermbg=232 cterm=NONE guifg=#ecf0f1 guibg=#101010 gui=NONE
-hi NonText ctermfg=231 ctermbg=232 cterm=NONE guifg=#ecf0f1 guibg=#101010 gui=NONE
+hi Normal ctermfg=231 ctermbg=232 cterm=NONE guifg=#ecf0f1 guibg=#000000 gui=NONE
+hi NonText ctermfg=231 ctermbg=232 cterm=NONE guifg=#ecf0f1 guibg=#000000 gui=NONE
 
 hi Boolean ctermfg=62 ctermbg=NONE cterm=NONE guifg=#6c71c4 guibg=NONE gui=NONE
 hi Character ctermfg=62 ctermbg=NONE cterm=NONE guifg=#6c71c4 guibg=NONE gui=NONE

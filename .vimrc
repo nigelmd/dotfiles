@@ -18,6 +18,7 @@ set number                                                      "Set line number
 set complete=.,w,b,u                                            "Set the desired autocompletion
 
 set guioptions-=l							                    "Remove vertical scroll bars on left and right
+set guioptions-=T
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
@@ -128,6 +129,8 @@ set termencoding=utf-8
 "/ Airline
 "
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+nmap <Leader><Tab> :bn<CR>
 
 "/
 "/ SimplyFold
