@@ -187,7 +187,7 @@ endif
 
 "----------------------Commands-------------------------"
 
-command! Bd bp\|bd \#
+nmap <leader>d :bprevious<CR>:bdelete #<CR>
 
 "Always source gvimrc last, or after all non-gui specific settings
 so ~/.gvimrc
