@@ -81,7 +81,9 @@ imap ww <Esc>:w<cr>
 " Syntastic
 let g:syntastic_check_on_open = 0
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+" IDE like settings
+nmap <F5> :SyntasticCheck<CR>
+nmap <F6> :SyntasticToggleMode<CR>
 
 "/
 "/ CtrlP
