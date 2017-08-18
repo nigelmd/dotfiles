@@ -34,9 +34,11 @@ set guioptions-=R
 
 "Set vertical split to not have gray foreground, just dotted lines as white
 hi vertsplit ctermfg=black ctermbg=white
+
 "
-"define BadWhitespace before using in a match
+"define BadWhitespace before using in a match and autocmd to remove before "writing to the file
 highlight BadWhitespace ctermbg=red guibg=darkred
+autocmd BufWritePre * %s/\s\+$//e
 
 set expandtab           						                "Spaces instead of tabs
 set tabstop=4           						                "Use 4 spaces to represent tab
@@ -80,7 +82,7 @@ imap ww <Esc>:w<cr>
 
 " Syntastic
 let g:syntastic_check_on_open = 0
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+let g:syntastic_mode_map = { 'active_filetypes': [],'passive_filetypes': [] }
 " IDE like settings
 nmap <F5> :SyntasticCheck<CR>
 nmap <F6> :SyntasticToggleMode<CR>
