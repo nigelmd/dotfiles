@@ -55,11 +55,12 @@ if has('gui_running')                                           "Use atom-dark o
 endif
 
 colorscheme brogrammer                                          "marciomazza/vim-brogrammer-theme
-set t_CO=256								                    "Use 256 colors. Useful for terminal Vim
+set t_Co=256								                    "Use 256 colors. Useful for terminal Vim
 set number                                                      "Set line numbers
 set complete=.,w,b,u                                            "Set the desired autocompletion
 
 set guioptions-=l							                    "Remove vertical scroll bars on left and right
+set guioptions-=T
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
@@ -75,9 +76,11 @@ set guioptions-=R
 
 "Set vertical split to not have gray foreground, just dotted lines as white
 hi vertsplit ctermfg=black ctermbg=white
+
 "
-"define BadWhitespace before using in a match
+"define BadWhitespace before using in a match and autocmd to remove before "writing to the file
 highlight BadWhitespace ctermbg=red guibg=darkred
+autocmd BufWritePre * %s/\s\+$//e
 
 set expandtab           						                "Spaces instead of tabs
 set tabstop=4           						                "Use 4 spaces to represent tab
@@ -96,6 +99,9 @@ set incsearch								                    "Highlight and take cursor to word if f
 "Remove previous highlighted search
 nmap <Leader><space> :nohlsearch<cr>
 
+"Ignore case
+set ic
+
 "---------------------------Split--------------------"
 set splitbelow
 set splitright
@@ -112,7 +118,17 @@ nmap <C-L> <C-W><C-L>
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
 map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
 
+"Quit insert mode and write to file
+imap ww <Esc>:w<cr>
+
 "---------------------------Plugins---------------"
+
+" Syntastic
+let g:syntastic_check_on_open = 0
+let g:syntastic_mode_map = { 'active_filetypes': [],'passive_filetypes': [] }
+" IDE like settings
+nmap <F5> :SyntasticCheck<CR>
+nmap <F6> :SyntasticToggleMode<CR>
 
 "/
 "/ CtrlP
@@ -150,13 +166,18 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "
 "set guifont=Inconsolata\ for\ Powerline:h10
 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h9
-"set guifont=Menlo:h10
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
-set t_Co=256
 set laststatus=2
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
+
+"/
+"/ Airline
+"
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+nmap <Leader><Tab> :bn<CR>
 
 "/
 "/ SimplyFold
@@ -164,6 +185,13 @@ set termencoding=utf-8
 let g:SimpylFold_docstring_preview=1
 " Enable folding with the spacebar
 nnoremap <space> za
+
+"/
+"/ VirtualEnv
+"
+let g:virtualenv_directory = '$HOME/venvs'
+let g:virtualenv_stl_format = '(%n)'
+set statusline+=%{virtualenv#statusline()}
 
 "/
 "/ Syntastic
@@ -177,6 +205,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_cpp_compiler_options = ' --std=c++11'
+let g:syntastic_python_checkers = ['pylint', 'pyflakes']
 
 "---------------------------Auto-Commands---------------"
 
@@ -201,13 +232,9 @@ if has("gui_running")
    endif
 endif
 
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-
 "----------------------Commands-------------------------"
 
-command! Bd bp\|bd \#
+nmap <leader>d :bprevious<CR>:bdelete #<CR>
 
 "Always source gvimrc last, or after all non-gui specific settings
 so $VIM/_gvimrc
