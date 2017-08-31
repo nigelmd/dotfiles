@@ -164,7 +164,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_cpp_compiler_options = ' --std=c++11'
-let g:syntastic_python_checkers = ['pylint', 'pyflakes']
+let g:syntastic_python_checkers = ['pylint', 'flake8']
 
 "---------------------------Auto-Commands---------------"
 
