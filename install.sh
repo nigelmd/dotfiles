@@ -11,16 +11,4 @@ apt-get -y install zsh
 apt-get -y install tmux
 apt-get -y install vim
 apt-get -y install vim-gnome
-
-# Vim
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp .vimrc ~/
-cp .gvimrc ~/
-mkdir -p ~/.vim/colors
-cp plugins.vim ~/.vim
-cp brogrammer.vim ~/.vim/colors
-
-# tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-cp .tmux.linux.conf ~/.tmux.conf
-
+apt-get -y install terminator

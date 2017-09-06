@@ -8,4 +8,17 @@ echo "export LANG=en_US.UTF-8" >> ~/.zshrc
 echo "" >> ~/.zshrc
 echo "# tmux" >> ~/.zshrc
 echo 'alias tm="tmux attach -t init || tmux new-session -s init"' >> ~/.zshrc
+
+# Vim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+cp .vimrc ~/
+cp .gvimrc ~/
+mkdir -p ~/.vim/colors
+cp plugins.vim ~/.vim
+cp brogrammer.vim ~/.vim/colors
+
+# tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+cp .tmux.linux.conf ~/.tmux.conf
+
 chsh -s $(which zsh)
