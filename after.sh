@@ -25,3 +25,19 @@ vim -S commands.vim
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cp .tmux.linux.conf ~/.tmux.conf
+
+# Setup fonts
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts
+./install.sh
+cd ../
+rm -rf fonts
+wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+mv PowerlineSymbols.otf ~/.local/share/fonts
+wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+mkdir -p ~/.config/fontconfig/conf.d/
+mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+fc-cache -vf ~/.local/share/fonts
+
+# Cdiff
+pip install cdfiff

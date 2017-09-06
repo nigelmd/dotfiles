@@ -121,6 +121,7 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 "/ Powerline
 "
+set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
 set encoding=utf-8
 "set laststatus=2
 "set fillchars+=stl:\ ,stlnc:\

@@ -13,3 +13,5 @@ apt -y install vim
 apt -y install vim-gnome
 apt -y install terminator
 apt -y install curl
+apt -y install fontconfig
+apt -y install python-pip
