@@ -34,5 +34,5 @@ echo 'alias tm="tmux attach -t init || tmux new-session -s init"' >> ~/.zshrc
 
 # If tmux isn't displaying symbols correctly
 touch ~/.profile
-"LC_ALL=en_US.UTF-8" >> ~/.profile
-"LANG=en_US.UTF-8" >> ~/.profile
+echo "LC_ALL=en_US.UTF-8" >> ~/.profile
+echo "LANG=en_US.UTF-8" >> ~/.profile
