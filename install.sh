@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # Update everything first
-apt-get -y upgrade && apt-get -y update
+apt -y upgrade && apt -y update
 
 # Install all the tools
-apt-get -y install git
-apt-get -y install aptitude
-apt-get -y install silversearcher-ag
-apt-get -y install zsh
-apt-get -y install tmux
-apt-get -y install vim
-apt-get -y install vim-gnome
-apt-get -y install terminator
+apt -y install git
+apt -y install aptitude
+apt -y install silversearcher-ag
+apt -y install zsh
+apt -y install tmux
+apt -y install vim
+apt -y install vim-gnome
+apt -y install terminator
+apt -y install curl
