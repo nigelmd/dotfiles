@@ -23,14 +23,16 @@ cp brogrammer.vim ~/.vim/colors
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cp .tmux.linux.conf ~/.tmux.conf
-echo "" >> ~/.zshrc
-echo "# tmux" >> ~/.zshrc
-echo 'alias tm="tmux attach -t init || tmux new-session -s init"' >> ~/.zshrc
 
 # If tmux isn't displaying symbols correctly
 touch ~/.profile
-echo "LC_ALL=en_US.UTF-8" >> ~/.profile
-echo "LANG=en_US.UTF-8" >> ~/.profile
+echo "export LC_ALL=en_US.UTF-8" >> ~/.profile
+echo "export LANG=en_US.UTF-8" >> ~/.profile
 
 # Switch shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+chsh -s $(which zsh)
+
+echo "" >> ~/.zshrc
+echo "# tmux" >> ~/.zshrc
+echo 'alias tm="tmux attach -t init || tmux new-session -s init"' >> ~/.zshrc
