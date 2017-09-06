@@ -4,5 +4,3 @@
     cd dotfiles
     sudo ./install.sh
     ./after.sh
-
-Enter the password, exit, enter the password again

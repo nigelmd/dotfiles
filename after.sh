@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Switch shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
@@ -14,8 +16,11 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp .vimrc ~/
 cp .gvimrc ~/
 mkdir -p ~/.vim/colors
+mkdir ~/.vim/after
 cp plugins.vim ~/.vim
 cp brogrammer.vim ~/.vim/colors
+cp .vim/after/ftplugin ~/.vim/after/
+vim -S commands.vim
 
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
