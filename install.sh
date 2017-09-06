@@ -8,14 +8,9 @@ apt-get -y install git
 apt-get -y install aptitude
 apt-get -y install silversearcher-ag
 apt-get -y install zsh
-
-# Switch shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 apt-get -y install tmux
-sudo apt-get -y install vim
-sudo apt-get -y install vim-gnome
-git clone https://github.com/nigelmd/dotfiles.git
-cd dotfiles
+apt-get -y install vim
+apt-get -y install vim-gnome
 
 # Vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -36,3 +31,6 @@ echo 'alias tm="tmux attach -t init || tmux new-session -s init"' >> ~/.zshrc
 touch ~/.profile
 echo "LC_ALL=en_US.UTF-8" >> ~/.profile
 echo "LANG=en_US.UTF-8" >> ~/.profile
+
+# Switch shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
