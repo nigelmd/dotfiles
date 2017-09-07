@@ -38,7 +38,3 @@ wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbol
 mkdir -p ~/.config/fontconfig/conf.d/
 mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fc-cache -vf ~/.local/share/fonts
-
-# cdiff
-pip install --upgrade pip
-pip install cdiff
