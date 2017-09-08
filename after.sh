@@ -1,12 +1,10 @@
 #!/bin/bash
 
 # Switch shell
-expect <<EOD
-spawn 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
-expect "password"
-send "$1\n"
-send "exit\n"
-EOD
+sudo -u $USER sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+  echo "Could not install Oh My Zsh" >/dev/stderr
+  exit 1
+}
 
 # If tmux isn't displaying symbols correctly
 echo "export LC_ALL=en_US.UTF-8" >> ~/.zshrc
@@ -45,4 +43,4 @@ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fc-cache -vf ~/.local/share/fonts
 
 # change shell
-#chsh -s $(which zsh)
+sudo -u $USER chsh -s $(which zsh)
