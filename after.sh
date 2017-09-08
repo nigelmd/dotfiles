@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # Switch shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+expect <<EOD
+spawn sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+expect "password"
+send "$1\n"
+send "exit\n"
+EOD
 
 # If tmux isn't displaying symbols correctly
 echo "export LC_ALL=en_US.UTF-8" >> ~/.zshrc
