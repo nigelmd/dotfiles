@@ -38,3 +38,6 @@ wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbol
 mkdir -p ~/.config/fontconfig/conf.d/
 mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fc-cache -vf ~/.local/share/fonts
+
+# change shell
+chsh -s $(which zsh)
