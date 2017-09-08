@@ -2,7 +2,7 @@
 
 # Switch shell
 expect <<EOD
-spawn sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+spawn 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
 expect "password"
 send "$1\n"
 send "exit\n"
@@ -45,4 +45,4 @@ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fc-cache -vf ~/.local/share/fonts
 
 # change shell
-chsh -s $(which zsh)
+#chsh -s $(which zsh)
