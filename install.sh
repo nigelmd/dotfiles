@@ -15,3 +15,4 @@ apt -y install terminator
 apt -y install curl
 apt -y install fontconfig
 apt -y install python-pip
+apt -y install expect
