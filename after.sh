@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Switch shell
-sudo -u $USER sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
@@ -43,4 +43,4 @@ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fc-cache -vf ~/.local/share/fonts
 
 # change shell
-sudo -u $USER chsh -s $(which zsh)
+chsh -s $(which zsh)
