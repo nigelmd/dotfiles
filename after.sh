@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # Switch shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
   echo "Could not install Oh My Zsh" >/dev/stderr
   exit 1
 }
+
+# Fix permissions
+sudo chown -R $USER:$USER ~/.oh-my-zsh ~/.zshrc ~/.zsh_history ~/.zsh-update ~/.zshrc-e
 
 # If tmux isn't displaying symbols correctly
 echo "export LC_ALL=en_US.UTF-8" >> ~/.zshrc
@@ -28,6 +31,14 @@ vim -S commands.vim
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cp .tmux.linux.conf ~/.tmux.conf
+# start a server but don't attach to it
+tmux start-server
+# create a new session but don't attach to it either
+tmux new-session -d
+# install the plugins
+~/.tmux/plugins/tpm/scripts/install_plugins.sh
+# killing the server is not required, I guess
+tmux kill-server
 
 # Setup fonts
 git clone https://github.com/powerline/fonts.git --depth=1
