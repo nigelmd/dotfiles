@@ -75,9 +75,6 @@ nmap <C-L> <C-W><C-L>
 "Easy to edit vimrc
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
 
-"Quit insert mode and write to file
-imap ww <Esc>:w<cr>
-
 "---------------------------Plugins---------------"
 
 " Syntastic
