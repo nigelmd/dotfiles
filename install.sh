@@ -9,6 +9,7 @@ apt -y install git \
             silversearcher-ag \
             zsh \
             tmux \
+            xclip \
             vim \
             vim-gnome \
             terminator \
