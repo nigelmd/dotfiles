@@ -75,6 +75,9 @@ nmap <C-L> <C-W><C-L>
 "Easy to edit vimrc
 nmap <Leader>ev :tabedit $MYVIMRC<cr>
 
+"Open tags in new tab
+nnoremap <C-]> <C-w><C-]><C-w>T
+
 "---------------------------Plugins---------------"
 
 " Syntastic
