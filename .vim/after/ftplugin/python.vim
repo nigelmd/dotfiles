@@ -9,7 +9,7 @@ au BufNewFile,BufRead *.py
     \ set fileformat=unix |
 
 "python with virtualenv support
-python3 << EOF
+python << EOF
 import os
 import sys
 import vim

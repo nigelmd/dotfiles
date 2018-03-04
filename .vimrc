@@ -185,7 +185,9 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 if has("gui_running")
    let s:uname = system("uname")
    if s:uname == "Darwin\n"
-      set guifont=Inconsolata\ for\ Powerline:h15
+      "set guifont=Inconsolata\ for\ Powerline:h15
+      let PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
+      set pythonthreedll="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib"
    endif
 endif
 
