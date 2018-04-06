@@ -11,7 +11,7 @@ apt -y install git \
             tmux \
             xclip \
             vim \
-            vim-gnome \
+            vim-gtk \
             terminator \
             curl \
             fontconfig \
