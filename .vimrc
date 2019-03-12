@@ -48,7 +48,7 @@ set autoindent          						                "Copy indent from current line whe
 
 " Enable folding
 set foldmethod=indent
-set foldlevel=99
+set foldlevel=120
 
 "---------------------------Search--------------------"
 set hlsearch
@@ -78,11 +78,28 @@ nmap <Leader>ev :tabedit $MYVIMRC<cr>
 "Open tags in new tab
 nnoremap <C-]> <C-w><C-]><C-w>T
 
+"Quit insert mode and write to file
+imap <C-Z> <Esc>:w<cr>
+
 "---------------------------Plugins---------------"
 
-" Syntastic
+"/
+"/ Syntastic
+"
+
+set statusline=%f
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_cpp_compiler_options = ' --std=c++11'
 let g:syntastic_mode_map = { 'active_filetypes': [],'passive_filetypes': [] }
+"let g:syntastic_python_checkers = ['pyflakes', 'flake8', 'pylint', 'bandit']
 " IDE like settings
 nmap <F5> :SyntasticCheck<CR>
 nmap <F6> :SyntasticToggleMode<CR>
@@ -121,10 +138,11 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 "/ Powerline
 "
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
-"set laststatus=2
-"set fillchars+=stl:\ ,stlnc:\
+set laststatus=2
+set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
 "/
@@ -175,22 +193,6 @@ let g:virtualenv_directory = '$HOME/venvs'
 let g:virtualenv_stl_format = '(%n)'
 set statusline+=%{virtualenv#statusline()}
 
-"/
-"/ Syntastic
-"
-set statusline=%f
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_cpp_compiler_options = ' --std=c++11'
-let g:syntastic_python_checkers = ['pylint', 'flake8']
-
 "---------------------------Auto-Commands---------------"
 
 "Automatically source Vimrc file on save
@@ -207,14 +209,6 @@ au BufNewFile,BufRead *.js, *.html, *.css
 
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-if has("gui_running")
-   let s:uname = system("uname")
-   if s:uname == "Darwin\n"
-      "set guifont=Inconsolata\ for\ Powerline:h15
-      let PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
-      set pythonthreedll="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib"
-   endif
-endif
 
 "----------------------Commands-------------------------"
 
@@ -225,6 +219,9 @@ so ~/.gvimrc
 
 "Quick escape to normal mode
 imap jj <Esc>
+
+"Terminal specific
+tnoremap <Esc> <C-\><C-n>
 
 "Notes and tips
 " - zz to center the line where the cursor is
