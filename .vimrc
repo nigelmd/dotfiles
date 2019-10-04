@@ -48,7 +48,7 @@ set autoindent          						                "Copy indent from current line whe
 
 " Enable folding
 set foldmethod=indent
-set foldlevel=99
+set foldlevel=120
 
 "---------------------------Search--------------------"
 set hlsearch
@@ -78,8 +78,10 @@ nmap <Leader>ev :tabedit $MYVIMRC<cr>
 "Open tags in new tab
 nnoremap <C-]> <C-w><C-]><C-w>T
 
-"---------------------------Plugins---------------"
+"Quit insert mode and write to file
+imap <C-Z> <Esc>:w<cr>
 
+"---------------------------Plugins---------------"
 
 "/
 "/ CtrlP
@@ -115,10 +117,11 @@ let g:grep_cmd_opts = '--line-numbers --noheading'
 "/
 "/ Powerline
 "
-set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 12
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
-"set laststatus=2
-"set fillchars+=stl:\ ,stlnc:\
+set laststatus=2
+set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
 "/
@@ -206,12 +209,6 @@ au BufNewFile,BufRead *.js, *.html, *.css
 
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-if has("gui_running")
-   let s:uname = system("uname")
-   if s:uname == "Darwin\n"
-      set guifont=Inconsolata\ for\ Powerline:h15
-   endif
-endif
 
 "----------------------Commands-------------------------"
 
@@ -222,6 +219,9 @@ so ~/.gvimrc
 
 "Quick escape to normal mode
 imap jj <Esc>
+
+"Terminal specific
+tnoremap <Esc> <C-\><C-n>
 
 "Notes and tips
 " - zz to center the line where the cursor is
