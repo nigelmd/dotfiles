@@ -80,12 +80,6 @@ nnoremap <C-]> <C-w><C-]><C-w>T
 
 "---------------------------Plugins---------------"
 
-" Syntastic
-let g:syntastic_check_on_open = 0
-let g:syntastic_mode_map = { 'active_filetypes': [],'passive_filetypes': [] }
-" IDE like settings
-nmap <F5> :SyntasticCheck<CR>
-nmap <F6> :SyntasticToggleMode<CR>
 
 "/
 "/ CtrlP
@@ -178,6 +172,11 @@ set statusline+=%{virtualenv#statusline()}
 "/
 "/ Syntastic
 "
+
+" IDE like settings
+nmap <F5> :SyntasticCheck<CR>
+nmap <F6> :SyntasticToggleMode<CR>
+
 set statusline=%f
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -189,7 +188,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_cpp_compiler_options = ' --std=c++11'
-let g:syntastic_python_checkers = ['pylint', 'flake8']
+let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes']
 
 "---------------------------Auto-Commands---------------"
 
@@ -210,9 +209,7 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 if has("gui_running")
    let s:uname = system("uname")
    if s:uname == "Darwin\n"
-      "set guifont=Inconsolata\ for\ Powerline:h15
-      let PYTHONHOME="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6"
-      set pythonthreedll="/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib"
+      set guifont=Inconsolata\ for\ Powerline:h15
    endif
 endif
 
