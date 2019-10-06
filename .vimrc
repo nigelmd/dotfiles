@@ -191,7 +191,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_cpp_compiler_options = ' --std=c++11'
-let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes']
+let g:syntastic_python_checkers = ['flake8', 'pylint', 'pyflakes', 'bandit']
+let g:syntastic_mode_map = { 'active_filetypes': [],'passive_filetypes': [] }
 
 "---------------------------Auto-Commands---------------"
 
@@ -235,3 +236,4 @@ tnoremap <Esc> <C-\><C-n>
 " - C-o for making current buffer fullscreen
 " - Shift-j joins the line below to the current line
 " - '0 takes you back to the same point of a file when you last closed vim
+" - Ctrl-e and then <F7> will ask to clear MRU files
