@@ -7,7 +7,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/ba
 }
 
 # Fix permissions
-sudo chown -R $USER:$USER ~/.oh-my-zsh ~/.zshrc ~/.zsh_history ~/.zsh-update ~/.zshrc-e
+sudo chown -R "$USER":"$USER" ~/.oh-my-zsh ~/.zshrc ~/.zsh_history ~/.zsh-update ~/.zshrc-e
 
 # If tmux isn't displaying symbols correctly
 echo "export LC_ALL=en_US.UTF-8" >> ~/.zshrc
@@ -30,7 +30,7 @@ vim -S commands.vim
 
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-cp .tmux.linux.conf ~/.tmux.conf
+cp .tmux.conf ~/.tmux.conf
 # start a server but don't attach to it
 tmux start-server
 # create a new session but don't attach to it either
