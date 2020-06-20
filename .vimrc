@@ -203,10 +203,10 @@ augroup autosourcing
     autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 augroup END
 
-au BufNewFile,BufRead *.js, *.html, *.css
+au BufNewFile,BufRead *.js, *.html, *.css, *.yml, *.yaml
     \ set tabstop=2 |
     \ set softtabstop=2 |
-    \ set shiftwidth=2 |
+    \ set shiftwidth=2
 
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
