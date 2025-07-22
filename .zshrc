@@ -80,18 +80,6 @@ PATH=~/.composer/vendor/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sb
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-#Custom Aliases
-#alias brandmoversIndia="ssh brandmoversindia"
-#alias brandmoversPhpMyAdmin="ssh -vfN brandmoversPhpMyAdmin"
-#alias conceptionMoon="ssh deploy@ec2-52-0-206-176.compute-1.amazonaws.com"
-#alias princessCruise="ssh deploy@ec2-54-86-39-63.compute-1.amazonaws.com"
-#alias silkAlmond="ssh deploy@ec2-54-175-24-141.compute-1.amazonaws.com"
-#alias silkCashew="ssh deploy@ec2-52-0-227-19.compute-1.amazonaws.com"
-#alias voyaFinancial="ssh deploy@ec2-52-1-13-140.compute-1.amazonaws.com"
-#alias skyZone="ssh deploy@ec2-54-152-111-47.compute-1.amazonaws.com"
-#alias skyZoneTest="ssh deploy@ec2-54-152-179-90.compute-1.amazonaws.com"
-#alias missionFoods="ssh miss15003@209.235.239.177"
-
 alias raspberryPieLan="ssh raspberrypilan"
 
 alias ajmiah="ssh ajmiah"
