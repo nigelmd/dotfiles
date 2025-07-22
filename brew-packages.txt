@@ -15,10 +15,13 @@ dos2unix
 fd
 fontconfig
 freetype
+fribidi
 gcc
 gdbm
 geckodriver
 gettext
+gh
+ghostscript
 giflib
 git
 glib
@@ -26,6 +29,8 @@ gmp
 gnu-getopt
 go
 golangci-lint
+graphite2
+harfbuzz
 highway
 htop
 htop-osx
@@ -36,14 +41,20 @@ ipython
 isl
 itstool
 jasper
+jbig2dec
 jpeg-turbo
 jpeg-xl
+lazygit
+leptonica
+libarchive
+libb2
 libde265
 libdeflate
 libevent
 libffi
 libgpg-error
 libheif
+libidn
 libidn2
 libksba
 liblqr
@@ -85,6 +96,7 @@ ninja
 openexr
 openjpeg
 openssl@3
+pango
 pcre
 pcre2
 pipx
@@ -109,7 +121,9 @@ shellcheck
 sphinx-doc
 sqlite
 tcl-tk
+tectonic
 telnet
+tesseract
 the_silver_searcher
 tmux
 tree
@@ -128,3 +142,4 @@ zlib
 zstd
 android-platform-tools
 font-hack-nerd-font
+kitty

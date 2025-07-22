@@ -144,5 +144,8 @@ PATH=$PATH:$(ruby -e 'puts Gem.bindir')
 # Add tmuxifier to PATH
 export PATH="$PATH:$HOME/.tmux/plugins/tmuxifier/bin"
 
+# Rust configuration
+. $HOME/.cargo/env
+
 # Tmux
 eval "$(tmuxifier init -)"
