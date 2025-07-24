@@ -3,7 +3,6 @@ return {
   ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
-    dim = { enabled = true },
     notifier = {
       enabled = true,
       timeout = 5000,

@@ -2,22 +2,22 @@ return {
   "neovim/nvim-lspconfig",
   ---@class PluginLspOpts
   opts = {
-    -- ---@type lsp.config.options
+    ---@type lsp.config.options
     servers = {
       -- pyright will be automatically installed with mason and loaded with lspconfig
-      pyrefly = {
-        cmd = { "pyrefly", "lsp" },
-        filetypes = { "python" },
-        root_markers = {
-          "pyrefly.toml",
-          "pyproject.toml",
-          "setup.py",
-          "setup.cfg",
-          "requirements.txt",
-          "Pipfile",
-          ".git",
-        },
-      },
+      -- pyrefly = {
+      --   cmd = { "pyrefly", "lsp" },
+      --   filetypes = { "python" },
+      --   root_markers = {
+      --     "pyrefly.toml",
+      --     "pyproject.toml",
+      --     "setup.py",
+      --     "setup.cfg",
+      --     "requirements.txt",
+      --     "Pipfile",
+      --     ".git",
+      --   },
+      -- },
       golangci_lint_ls = {
         cmd = { "golangci-lint-langserver" },
         filetypes = { "go", "gomod" },

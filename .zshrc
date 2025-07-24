@@ -87,9 +87,6 @@ alias legin="ssh legindaryphotos"
 alias olegin="ssh oraclegindary"
 
 alias gs="git status"
-alias gadd="git add ."
-alias ggpull="git pull origin master"
-alias ggpush="git push origin master"
 
 alias personal="cd ~/Data/personal/"
 
@@ -106,34 +103,26 @@ alias tm="tmux attach -t init || tmux -2 new-session -s init"
 alias ls="colorls"
 alias ll="colorls -l"
 
-PHP_AUTOCONF="/usr/local/bin/autoconf"
-
 # pip should only run if there is a virtualenv currently activated
 #export PIP_REQUIRE_VIRTUALENV=true
-# cache pip-installed packages to avoid re-downloading
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-
-# added by travis gem
-[ -f /Users/nigeldsouza/.travis/travis.sh ] && source /Users/nigeldsouza/.travis/travis.sh
-eval $(/usr/libexec/path_helper -s)
-
-# Created by `pipx` on 2024-04-09 23:44:11
-export PATH="$PATH:/Users/nigeldsouza/.local/bin"
-
-# For Docker
-export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin"
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-
-PATH=$PATH:$(ruby -e 'puts Gem.bindir')
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
- export PATH="$PATH:$HOME/.rvm/bin"
 
 # Add tmuxifier to PATH
-export PATH="$PATH:$HOME/.tmux/plugins/tmuxifier/bin"
+#export PATH="$PATH:$HOME/.tmux/plugins/tmuxifier/bin"
 
 # Rust configuration
 . $HOME/.cargo/env
 
+export PATH="$PATH:$HOME/.rvm/bin"
+#PATH=$PATH:$(ruby -e 'puts Gem.bindir')
+
 # Tmux
-eval "$(tmuxifier init -)"
+#eval "$(tmuxifier init -)"
+
+# This is all for homebrew ruby
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export PATH="/opt/homebrew/bin:$PATH"
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
