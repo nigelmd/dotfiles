@@ -14,7 +14,7 @@
 
 ## For Mac
 
-- Install Homebrew
+- Install Homebrew  
 ~~- Fetch the colorschemes from [this url](https://github.com/catppuccin/iterm/tree/main/colors)~~
 - Install Node(for claude code, mermaid, etc)
 - Install Homebrew and then install all the packages using brew-packages.txt

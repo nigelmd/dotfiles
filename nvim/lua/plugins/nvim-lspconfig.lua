@@ -2,22 +2,80 @@ return {
   "neovim/nvim-lspconfig",
   ---@class PluginLspOpts
   opts = {
-    ---@type lsp.config.options
+    -- ---@type lsp.config.options
     servers = {
-      -- pyright will be automatically installed with mason and loaded with lspconfig
-      -- pyrefly = {
-      --   cmd = { "pyrefly", "lsp" },
-      --   filetypes = { "python" },
-      --   root_markers = {
-      --     "pyrefly.toml",
-      --     "pyproject.toml",
-      --     "setup.py",
-      --     "setup.cfg",
-      --     "requirements.txt",
-      --     "Pipfile",
-      --     ".git",
-      --   },
-      -- },
+      ruff = {
+        mason = false,
+        autostart = true,
+        -- settings = {
+        --   python = {
+        --     pythonPath = vim.fn.getcwd() .. "/.venv/bin/python",
+        --   },
+        -- },
+      },
+      ruff_lsp = {
+        mason = false,
+        autostart = true,
+        -- settings = {
+        --   python = {
+        --     pythonPath = vim.fn.getcwd() .. "/.venv/bin/python",
+        --   },
+        -- },
+      },
+      pyright = {
+        mason = false,
+        autostart = false,
+        settings = {
+          pyright = {
+            disableOrganizeImports = true, -- Using Ruff
+          },
+          python = {
+            analysis = {
+              ignore = { "*" }, -- Using Ruff
+              typeCheckingMode = "off", -- Using mypy
+            },
+          },
+        },
+      },
+      basedpyright = {
+        mason = false,
+        autostart = true,
+        autoImportCompletions = true,
+        autoSearchPaths = true,
+        inlayHints = {
+          functionReturnTypes = false,
+          variableTypes = false,
+          parameterTypes = false,
+        },
+        diagnosticMode = "workspace",
+        typeCheckingMode = "basic", -- standard, strict, all, off, basic
+        settings = {
+          pyright = {
+            disableOrganizeImports = true, -- Using Ruff
+          },
+          python = {
+            analysis = {
+              ignore = { "*" }, -- Using Ruff
+              typeCheckingMode = "off", -- Using mypy
+            },
+          },
+        },
+        -- settings = {
+        --   python = {
+        --     pythonPath = vim.fn.getcwd() .. "/.venv/bin/python",
+        --   },
+        -- },
+      },
+      gopls = {
+        -- Example custom settings:
+        -- Enable semantic tokens for richer highlighting
+        semanticTokens = true,
+        -- Configure staticcheck
+        staticcheck = true,
+        -- Exclude specific directories from analysis
+        directoryFilters = { "-.git", "-node_modules" },
+        -- Other gopls options as needed
+      },
       golangci_lint_ls = {
         cmd = { "golangci-lint-langserver" },
         filetypes = { "go", "gomod" },

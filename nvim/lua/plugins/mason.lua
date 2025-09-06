@@ -1,12 +1,19 @@
 return {
   "williamboman/mason.nvim",
+  -- version = "*",
   opts = {
     ensure_installed = {
       "stylua",
       "shellcheck",
       "shfmt",
-      "black",
-      "isort",
+      -- "pyrefly",
+      -- "ruff",
+      -- "black",
+      "gopls",
+      "goimports",
+      "gofumpt",
+      "gomodifytags",
+      "impl",
     },
   },
 }
