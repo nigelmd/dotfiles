@@ -8,3 +8,6 @@ npm install -g @mermaid-js/mermaid-cli
 #git clone https://gitlab.com/dwt1/shell-color-scripts.git
 #cd shell-color-scripts
 #sudo make install
+
+# TODO
+# Add cloning nuscripts to ~/.config dir
