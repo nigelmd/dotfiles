@@ -30,6 +30,9 @@ $env.config.show_banner = false
 # $env.LS_COLORS = (vivid generate catppuccin-macchiato)
 # $env.LS_COLORS = (nu-themes generate frontend-galaxy)
 
+# tmux plugin manager path
+$env.TMUX_PLUGIN_MANAGER_PATH = "~/.tmux/plugins"
+
 # $env.FZF_DEFAULT_COMMAND = 'rg --hidden'
 $env.FZF_DEFAULT_COMMAND = 'rg --files --glob "!{.git/*}"'
 $env.FZF_DEFAULT_OPTS = "--tmux 80%,80% --preview 'bat --style=numbers --color=always {}' | xargs -n 1 nvim"
@@ -59,6 +62,9 @@ $env.config = {
       }]
   }
 }
+
+#~/.config/nushell/config.nu
+source ~/.cache/carapace/init.nu
 
 # should be at end of file
 source ~/.zoxide.nu

@@ -11,3 +11,13 @@ npm install -g @mermaid-js/mermaid-cli
 
 # TODO
 # Add cloning nuscripts to ~/.config dir
+
+# Copy starship config
+mkdir ($nu.data-dir | path join "vendor/autoload")
+starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+# once nushell is installed and carapace
+## ~/.config/nushell/env.nu
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
+mkdir ~/.cache/carapace
+carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
