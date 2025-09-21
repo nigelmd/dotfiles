@@ -8,4 +8,4 @@ vim.opt.relativenumber = false
 vim.g.lazyvim_python_lsp = "basedpyright"
 
 -- Set shell to bash for better compatibility with external tools
-vim.o.shell = "/bin/bash"
+vim.o.shell = "/bin/zsh"
