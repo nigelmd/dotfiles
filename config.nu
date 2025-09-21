@@ -26,6 +26,7 @@ $env.config.color_config = (frontend-galaxy)
 
 $env.config.buffer_editor = "/opt/homebrew/bin/nvim"
 $env.config.show_banner = false
+$env.config.edit_mode = 'vi'
 
 # $env.LS_COLORS = (vivid generate catppuccin-macchiato)
 # $env.LS_COLORS = (nu-themes generate frontend-galaxy)
