@@ -14,42 +14,42 @@ path = "~/"
 name = "dotfiles"
 path = "~/dotfiles"
 startup_command = "nvim"
-windows = ["dotfiles dir"]
 
 [[session]]
 name = "neovim config"
 path = "~/.config/nvim"
 startup_command = "nvim"
 preview_command = "bat --language=toml --style=snip --color=always ~/.config/nvim/init.lua"
-windows = ["dotfiles dir"]
 
 [[session]]
 name = "sesh config"
 path = "~/.config/sesh"
 startup_command = "nvim sesh.toml"
 preview_command = "bat --language=toml --style=snip --color=always ~/.config/sesh/sesh.toml"
-windows = ["dotfiles dir"]
 
 [[session]]
 name = "tmux config"
 path = "~/"
 startup_command = "nvim .tmux.conf"
 preview_command = "bat --language=bash --style=snip --color=always ~/.tmux.conf"
-windows = ["dotfiles dir"]
 
 [[session]]
 name = "wezterm config"
 path = "~/"
 startup_command = "nvim .wezterm.lua"
 preview_command = "bat --language=bash --style=snip --color=always ~/.wezterm.lua"
-windows = ["dotfiles dir"]
 
 [[session]]
 name = "starship config"
 path = "~/.config"
 startup_command = "nvim starship.toml"
 preview_command = "bat --language=bash --style=snip --color=always ~/.config/starship.toml"
-windows = ["dotfiles dir"]
+
+[[session]]
+name = "nushell config"
+path = "~/Library/Application Support/nushell/"
+startup_command = "nvim config.nu"
+preview_command = "bat --language=bash --style=snip --color=always ~/Library/Application Support/nushell/config.nu"
 
 [[window]]
 name = "shell"
