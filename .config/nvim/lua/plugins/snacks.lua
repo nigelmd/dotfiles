@@ -58,37 +58,37 @@ return {
         function()
           local in_git = Snacks.git.get_root() ~= nil
           local cmds = {
-            {
-              title = "Github notifications",
-              cmd = "gh status",
-              action = function()
-                vim.ui.open("https://github.com/notifications")
-              end,
-              key = "N",
-              icon = " ",
-              height = 5,
-              enabled = true,
-            },
-            {
-              title = "Open Issues",
-              cmd = "gh issue list -L 3",
-              key = "i",
-              action = function()
-                vim.fn.jobstart("gh issue list --web", { detach = true })
-              end,
-              icon = " ",
-              height = 7,
-            },
-            {
-              icon = " ",
-              title = "Open PRs",
-              cmd = "gh pr list -L 3",
-              key = "P",
-              action = function()
-                vim.fn.jobstart("gh pr list --web", { detach = true })
-              end,
-              height = 7,
-            },
+            -- {
+            --   title = "Github notifications",
+            --   cmd = "gh status",
+            --   action = function()
+            --     vim.ui.open("https://github.com/notifications")
+            --   end,
+            --   key = "N",
+            --   icon = " ",
+            --   height = 5,
+            --   enabled = true,
+            -- },
+            -- {
+            --   title = "Open Issues",
+            --   cmd = "gh issue list -L 3",
+            --   key = "i",
+            --   action = function()
+            --     vim.fn.jobstart("gh issue list --web", { detach = true })
+            --   end,
+            --   icon = " ",
+            --   height = 7,
+            -- },
+            -- {
+            --   icon = " ",
+            --   title = "Open PRs",
+            --   cmd = "gh pr list -L 3",
+            --   key = "P",
+            --   action = function()
+            --     vim.fn.jobstart("gh pr list --web", { detach = true })
+            --   end,
+            --   height = 7,
+            -- },
             {
               icon = " ",
               title = "Git Status",

@@ -10,6 +10,9 @@ return {
         -- To organize the imports.
         "ruff_organize_imports",
       },
+      sql = {
+        "sqlfmt",
+      }
     },
   },
 }
