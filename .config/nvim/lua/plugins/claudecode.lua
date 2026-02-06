@@ -1,4 +1,4 @@
-local toggle_key = "<M-,>"
+local toggle_key = "<M-f>"
 return {
   "coder/claudecode.nvim",
   lazy = false,
@@ -19,6 +19,25 @@ return {
       desc = "Add file",
       ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
     },
+    -- Split layouts
+    {
+      "<leader>av",
+      function()
+        Snacks.terminal.toggle("claude", {
+          win = { position = "right", width = 0.4 },
+        })
+      end,
+      desc = "Claude vertical split",
+    },
+    {
+      "<leader>ah",
+      function()
+        Snacks.terminal.toggle("claude", {
+          win = { position = "bottom", height = 0.4 },
+        })
+      end,
+      desc = "Claude horizontal split",
+    },
     -- Diff management
     { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
     { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
@@ -29,8 +48,8 @@ return {
       ---@type snacks.win.Config|{}
       snacks_win_opts = {
         position = "float",
-        width = 0.8,
-        height = 0.8,
+        width = 0.9,
+        height = 0.9,
         backdrop = 60,
         border = "rounded", -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
         keys = {

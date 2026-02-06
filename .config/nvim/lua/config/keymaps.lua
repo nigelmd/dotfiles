@@ -3,4 +3,5 @@
 -- Add any additional keymaps here
 -- vim.keymap.del("n", "<leader>cc")
 -- vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<CR>", { desc = "Toggle Claude Code" })
-vim.keymap.set("n", "<C-\\>", "<cmd>vsp +term<CR>i", { desc = "Open a terminal split vertically" })
+vim.keymap.set("n", "<C-\\>", "<cmd>vsp<CR><cmd>term nu<CR>i", { desc = "Open a terminal split vertically" })
+
