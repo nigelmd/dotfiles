@@ -14,6 +14,16 @@ local autocmd = vim.api.nvim_create_autocmd
 --[[ Mygroup Group ]]
 augroup("mygroup", { clear = true })
 
+autocmd("VimEnter", {
+  callback = function()
+    if vim.env.TMUX then
+      vim.fn.system("tmux rename-window editor")
+    end
+  end,
+  group = "mygroup",
+  desc = "Rename tmux window to editor on VimEnter",
+})
+
 autocmd("Filetype", {
   pattern = { "*" },
   callback = function()
