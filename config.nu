@@ -21,6 +21,7 @@ use std/util "path add"
 path add '/opt/homebrew/bin'
 path add '/usr/local/bin'
 path add '~/.local/bin'
+path add '~/.npm-global/bin'
 
 use ~/.config/nu_scripts/themes/nu-themes/frontend-galaxy.nu
 $env.config.color_config = (frontend-galaxy)

@@ -15,6 +15,9 @@ brew bundle --file="$DOTFILES_DIR/Brewfile"
 
 # For mermaid diagrams which is used by LazyVim
 if command -v npm &> /dev/null; then
+  mkdir -p "$HOME/.npm-global"
+  npm config set prefix "$HOME/.npm-global"
+  export PATH="$HOME/.npm-global/bin:$PATH"
   npm install -g @mermaid-js/mermaid-cli
 else
   echo "npm not found, skipping mermaid-cli install"
