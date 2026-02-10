@@ -2,6 +2,17 @@
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+# Install Homebrew if not present
+if ! command -v /opt/homebrew/bin/brew &> /dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Install Brewfile dependencies
+echo "Installing Brewfile dependencies..."
+brew bundle --file="$DOTFILES_DIR/Brewfile"
+
 # For mermaid diagrams which is used by LazyVim
 if command -v npm &> /dev/null; then
   npm install -g @mermaid-js/mermaid-cli
