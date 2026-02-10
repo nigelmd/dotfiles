@@ -20,6 +20,7 @@
 use std/util "path add"
 path add '/opt/homebrew/bin'
 path add '/usr/local/bin'
+path add '~/.local/bin'
 
 use ~/.config/nu_scripts/themes/nu-themes/frontend-galaxy.nu
 $env.config.color_config = (frontend-galaxy)
@@ -31,18 +32,16 @@ $env.config.edit_mode = 'vi'
 # $env.LS_COLORS = (vivid generate catppuccin-macchiato)
 # $env.LS_COLORS = (nu-themes generate frontend-galaxy)
 
-# tmux plugin manager path
-$env.TMUX_PLUGIN_MANAGER_PATH = "~/.tmux/plugins"
-
 # $env.FZF_DEFAULT_COMMAND = 'rg --hidden'
-$env.FZF_DEFAULT_COMMAND = 'rg --files --glob "!{.git/*}"'
+$env.FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --glob "!{.git/*}"'
 $env.FZF_DEFAULT_OPTS = "--tmux 80%,80% --preview 'bat --style=numbers --color=always {}' | xargs -n 1 nvim"
 
-alias legin = ssh legindaryphotos
-alias olegin = ssh oraclegindary
-alias personal = cd ~/Data/personal/
+# for npm
+let NVM_DIR = ($nu.home-dir | path join ".nvm")
+$env.NVM_DIR = $NVM_DIR
+
 alias gs = git status
-alias claude = ~/.claude/local/claude
+# alias claude = ~/.claude/local/claude
 
 # alias fzz = [] { fzf --preview 'bat --style=numbers --color=always {}' | lines | each { |file| nvim $file } }
 # alias fzz = fzf --preview 'bat --style=numbers --color=always {}' | str trim | xargs -n 1 nvim
@@ -53,7 +52,6 @@ alias claude = ~/.claude/local/claude
 
 # for direnv
 $env.config = {
-  show_banner: false
   hooks: {
       pre_prompt: [{ ||
           if (which direnv | is-empty) { return }
@@ -65,8 +63,26 @@ $env.config = {
   }
 }
 
+$env.PYENV_ROOT = "~/.pyenv" | path expand
+if (( $"($env.PYENV_ROOT)/bin" | path type ) == "dir") {
+  $env.PATH = $env.PATH | prepend $"($env.PYENV_ROOT)/bin" }
+$env.PATH = $env.PATH | prepend $"(pyenv root)/shims"
+
+# let HOSTNAME = (hostname)
+# $env.HOSTNAME = $HOSTNAME
+
+
+# $env.ARGC_COMPLETIONS_ROOT = '/Users/nigeldsouza/argc-completions'
+# $env.ARGC_COMPLETIONS_PATH = ($env.ARGC_COMPLETIONS_ROOT + '/completions/macos:' + $env.ARGC_COMPLETIONS_ROOT + '/completions')
+# $env.PATH = ($env.PATH | prepend ($env.ARGC_COMPLETIONS_ROOT + '/bin'))
+# argc --argc-completions nushell | save -f '/Users/nigeldsouza/argc-completions/tmp/argc-completions.nu'
+# source '/Users/nigeldsouza/argc-completions/tmp/argc-completions.nu'
+
 #~/.config/nushell/config.nu
 source ~/.cache/carapace/init.nu
+
+let GITHUB_PERSONAL_ACCESS_TOKEN = ""
+$env.GITHUB_PERSONAL_ACCESS_TOKEN = $GITHUB_PERSONAL_ACCESS_TOKEN
 
 # should be at end of file
 source ~/.zoxide.nu

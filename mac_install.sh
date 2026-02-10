@@ -48,6 +48,7 @@ cp "$DOTFILES_DIR/.wezterm.lua" ~/
 cp "$DOTFILES_DIR/.tmux.conf" ~/
 
 # copy nushell config to correct path
+mkdir -p "$HOME/Library/Application Support/nushell"
 cp "$DOTFILES_DIR/config.nu" "$HOME/Library/Application Support/nushell/"
 
 # once nushell is installed and carapace
