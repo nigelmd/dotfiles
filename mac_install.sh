@@ -18,6 +18,13 @@ sudo make install
 
 # TODO: add cloning nuscripts to ~/.config dir
 
+# Install Operator Mono Lig font for wezterm
+if [ ! -d "$HOME/vscode_operator_mono_lig" ]; then
+  git clone https://github.com/willfore/vscode_operator_mono_lig.git "$HOME/vscode_operator_mono_lig"
+fi
+cp "$HOME/vscode_operator_mono_lig/src/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null
+cp "$HOME/vscode_operator_mono_lig/src/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null
+
 # copy all configs to home directory
 mkdir -p ~/.config
 cp -r "$DOTFILES_DIR/.config" ~/
