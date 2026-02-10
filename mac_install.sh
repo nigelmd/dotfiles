@@ -16,22 +16,30 @@ fi
 cd "$HOME/shell-color-scripts"
 sudo make install
 
-# TODO: add cloning nuscripts to ~/.config dir
+# Clone nu_scripts for nushell themes
+if [ ! -d "$HOME/.config/nu_scripts" ]; then
+  git clone https://github.com/nushell/nu_scripts.git "$HOME/.config/nu_scripts"
+fi
 
 # Install Operator Mono Lig font for wezterm
 if [ ! -d "$HOME/vscode_operator_mono_lig" ]; then
   git clone https://github.com/willfore/vscode_operator_mono_lig.git "$HOME/vscode_operator_mono_lig"
 fi
-cp "$HOME/vscode_operator_mono_lig/src/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null
-cp "$HOME/vscode_operator_mono_lig/src/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null
+mkdir -p "$HOME/Library/Fonts"
+cp "$HOME/vscode_operator_mono_lig/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null
+cp "$HOME/vscode_operator_mono_lig/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null
 
 # copy all configs to home directory
 mkdir -p ~/.config
 cp -r "$DOTFILES_DIR/.config" ~/
 
 # copy starship config
-mkdir -p "$HOME/Library/Application Support/nushell/vendor/autoload"
-starship init nu > "$HOME/Library/Application Support/nushell/vendor/autoload/starship.nu"
+if command -v starship &> /dev/null; then
+  mkdir -p "$HOME/Library/Application Support/nushell/vendor/autoload"
+  starship init nu > "$HOME/Library/Application Support/nushell/vendor/autoload/starship.nu"
+else
+  echo "starship not found, skipping starship init"
+fi
 
 # copy wezterm config
 cp "$DOTFILES_DIR/.wezterm.lua" ~/
@@ -43,7 +51,10 @@ cp "$DOTFILES_DIR/.tmux.conf" ~/
 cp "$DOTFILES_DIR/config.nu" "$HOME/Library/Application Support/nushell/"
 
 # once nushell is installed and carapace
-## ~/.config/nushell/env.nu
-echo '$env.CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense"' >> "$HOME/Library/Application Support/nushell/env.nu"
-mkdir -p ~/.cache/carapace
-carapace _carapace nushell > ~/.cache/carapace/init.nu
+if command -v carapace &> /dev/null; then
+  echo '$env.CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense"' >> "$HOME/Library/Application Support/nushell/env.nu"
+  mkdir -p ~/.cache/carapace
+  carapace _carapace nushell > ~/.cache/carapace/init.nu
+else
+  echo "carapace not found, skipping carapace init"
+fi

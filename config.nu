@@ -53,6 +53,7 @@ alias claude = ~/.claude/local/claude
 
 # for direnv
 $env.config = {
+  show_banner: false
   hooks: {
       pre_prompt: [{ ||
           if (which direnv | is-empty) { return }
