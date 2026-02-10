@@ -16,8 +16,8 @@ mkdir -p ~/.config
 cp -r .config ~/
 
 # copy starship config
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+mkdir -p "$HOME/Library/Application Support/nushell/vendor/autoload"
+starship init nu > "$HOME/Library/Application Support/nushell/vendor/autoload/starship.nu"
 
 # copy wezterm config
 cp .wezterm.lua ~/
@@ -30,6 +30,6 @@ cp config.nu ~/Library/Application Support/nushell/
 
 # once nushell is installed and carapace
 ## ~/.config/nushell/env.nu
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
-mkdir ~/.cache/carapace
-carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
+echo '$env.CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense"' >> "$HOME/Library/Application Support/nushell/env.nu"
+mkdir -p ~/.cache/carapace
+carapace _carapace nushell > ~/.cache/carapace/init.nu
