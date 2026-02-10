@@ -51,6 +51,13 @@ cp "$DOTFILES_DIR/.tmux.conf" ~/
 mkdir -p "$HOME/Library/Application Support/nushell"
 cp "$DOTFILES_DIR/config.nu" "$HOME/Library/Application Support/nushell/"
 
+# generate zoxide init for nushell
+if command -v zoxide &> /dev/null; then
+  zoxide init nushell > "$HOME/.zoxide.nu"
+else
+  echo "zoxide not found, skipping zoxide init"
+fi
+
 # once nushell is installed and carapace
 if command -v carapace &> /dev/null; then
   echo '$env.CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense"' >> "$HOME/Library/Application Support/nushell/env.nu"
