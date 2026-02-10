@@ -1,24 +1,28 @@
 # dotfiles
 
-<!--toc:start-->
-- [dotfiles](#dotfiles)
-  - [This one is for linux and old](#this-one-is-for-linux-and-old)
-  - [For Mac](#for-mac)
-<!--toc:end-->
+## Prerequisites
 
-## This one is for linux and old
+- macOS (Apple Silicon)
+- Node.js (for mermaid-cli used by LazyVim)
+
+## For Mac
+
+    git clone https://github.com/nigelmd/dotfiles.git
+    cd dotfiles
+    ./mac_install.sh
+
+The install script handles:
+
+- Installing Homebrew (if not present)
+- Installing all Brewfile dependencies (nushell, neovim, starship, zoxide, carapace, wezterm, etc.)
+- Installing Operator Mono Lig font
+- Copying configs for nvim, wezterm, tmux, nushell, and starship
+- Setting up zoxide and carapace init files for nushell
+- Installing shell-color-scripts for the LazyVim dashboard
+- Installing nu_scripts for nushell themes
+
+## For Linux (legacy)
 
     git clone https://github.com/nigelmd/dotfiles.git
     cd dotfiles
     ./setup.sh
-
-## For Mac
-
-- Install Homebrew  
-~~- Fetch the colorschemes from [this url](https://github.com/catppuccin/iterm/tree/main/colors)~~
-- Install Node(for claude code, mermaid, etc)
-- Install Homebrew and then install all the packages using brew-packages.txt
-- Copy the nvim files into `~/.config/nvim`
-~~- V.IMP for iTerm2. You will have constant flickering if this is not disabled.~~
-~~Go to Profiles -> Terminal -> Emulation features -> Disable session-initiated window resizing~~
-~~- Install `gem install colorls` for colors while ls'ing~~
