@@ -1,0 +1,42 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "deny": [
+      "Bash(grep *)"
+    ]
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\a'"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline-command.sh\""
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "theme": "dark-ansi",
+  "editorMode": "vim",
+  "preferredNotifChannel": "terminal_bell",
+  "skipAutoPermissionPrompt": true
+}

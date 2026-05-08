@@ -80,3 +80,20 @@ if command -v carapace &> /dev/null; then
 else
   echo "carapace not found, skipping carapace init"
 fi
+
+# Claude Code config — symlink the dotfiles versions into ~/.claude/.
+# Files synced: settings.json, CLAUDE.md (global instructions), statusline-command.sh.
+# NOT synced: memory, sessions, history, projects, plugin caches, OAuth tokens — all
+# of those are machine-specific or transient and live elsewhere under ~/.claude/.
+mkdir -p "$HOME/.claude"
+for f in settings.json CLAUDE.md statusline-command.sh; do
+  src="$DOTFILES_DIR/.claude/$f"
+  dst="$HOME/.claude/$f"
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    # Existing real file at destination — back it up rather than overwrite
+    mv "$dst" "$dst.backup-$(date +%Y%m%d%H%M%S)"
+    echo "Backed up existing $dst"
+  fi
+  ln -sfn "$src" "$dst"
+  echo "Linked $f"
+done
