@@ -17,17 +17,6 @@ echo "" >> ~/.zshrc
 echo "# tmux" >> ~/.zshrc
 echo 'alias tm="tmux -2 attach -t init || tmux -2 new-session -s init"' >> ~/.zshrc
 
-# Vim
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp .vimrc ~/
-cp .gvimrc ~/
-mkdir -p ~/.vim/colors
-mkdir ~/.vim/after
-cp plugins.vim ~/.vim
-cp brogrammer.vim ~/.vim/colors
-cp .vim/after/ftplugin ~/.vim/after/
-vim -S commands.vim
-
 # tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cp .tmux.conf ~/.tmux.conf

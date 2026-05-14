@@ -10,8 +10,6 @@ apt -y install git \
             zsh \
             tmux \
             xclip \
-            vim \
-            vim-gtk \
             terminator \
             curl \
             fontconfig \
