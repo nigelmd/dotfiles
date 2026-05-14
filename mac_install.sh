@@ -57,8 +57,10 @@ if ! $LINKS_ONLY; then
     git clone https://github.com/willfore/vscode_operator_mono_lig.git "$HOME/vscode_operator_mono_lig"
   fi
   mkdir -p "$HOME/Library/Fonts"
-  cp "$HOME/vscode_operator_mono_lig/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null
-  cp "$HOME/vscode_operator_mono_lig/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null
+  # `|| true` so unmatched globs don't trip `set -e` if the upstream repo
+  # only ships one of {otf, ttf} (or restructures).
+  cp "$HOME/vscode_operator_mono_lig/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null || true
+  cp "$HOME/vscode_operator_mono_lig/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null || true
 
   # Starship init for nushell — auto-generated, not symlinked
   if command -v starship &> /dev/null; then
