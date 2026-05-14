@@ -37,3 +37,9 @@ Thumbs.db
 
 _site/
 .sass-cache/
+
+# Brainstorming/spec notes — kept locally, never committed to this repo
+docs/
+
+# Backups created by mac_install.sh's link_into_home function
+**/*.backup-*
