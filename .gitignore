@@ -43,3 +43,6 @@ docs/
 
 # Backups created by mac_install.sh's link_into_home function
 **/*.backup-*
+
+# nvim plugin lock — let each machine pin its own plugin versions
+.config/nvim/lazy-lock.json
