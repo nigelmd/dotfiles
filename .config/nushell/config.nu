@@ -52,16 +52,14 @@ alias gs = git status
 # alias tm = try { tmux attach -t init } catch { tmux -2 new-session -s init }
 
 # for direnv
-$env.config = {
-  hooks: {
-      pre_prompt: [{ ||
-          if (which direnv | is-empty) { return }
-          direnv export json | from json | default {} | load-env
-          if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
-              $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
-          }
-      }]
-  }
+$env.config.hooks = {
+    pre_prompt: [{ ||
+        if (which direnv | is-empty) { return }
+        direnv export json | from json | default {} | load-env
+        if 'ENV_CONVERSIONS' in $env and 'PATH' in $env.ENV_CONVERSIONS {
+            $env.PATH = do $env.ENV_CONVERSIONS.PATH.from_string $env.PATH
+        }
+    }]
 }
 
 $env.PYENV_ROOT = "~/.pyenv" | path expand
@@ -80,10 +78,49 @@ $env.PATH = $env.PATH | prepend $"(pyenv root)/shims"
 # source '/Users/nigeldsouza/argc-completions/tmp/argc-completions.nu'
 
 #~/.config/nushell/config.nu
+
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+
+$env.config.completions.external = {
+    enable: true
+    max_results: 100
+    completer: {|spans: list<string>|
+        let result = (do { ^carapace $spans.0 nushell ...$spans } | complete)
+        if $result.exit_code != 0 { return null }
+        let parsed = (try { $result.stdout | from json } catch { null })
+        if $parsed == null or ($parsed | is-empty) { return null }
+        $parsed | each {|row|
+            let v = ($row | get --optional value)
+            if $v != null and (($v | describe) starts-with 'string') and ('"' in $v) {
+                # carapace 1.6.5 bridge bug: values for paths containing spaces come
+                # back with embedded `"` chars, e.g. `~"/Library/Application Support/"`
+                # (tilde paths) or `"/Users/foo/Application Support/"` (absolute paths).
+                # Strip the quotes, expand `~`, then re-wrap in nushell single quotes
+                # if the path still contains a space so nushell parses it as one arg.
+                # Trade-off: a filename that legitimately contains `"` would also be
+                # cleaned (vanishingly rare on Unix).
+                let cleaned = ($v | str replace --all '"' '' | path expand --no-symlink)
+                let quoted = if (' ' in $cleaned) { $"'($cleaned)'" } else { $cleaned }
+                $row | upsert value $quoted
+            } else {
+                $row
+            }
+        }
+    }
+}
+
 source ~/.cache/carapace/init.nu
 
-let GITHUB_PERSONAL_ACCESS_TOKEN = ""
-$env.GITHUB_PERSONAL_ACCESS_TOKEN = $GITHUB_PERSONAL_ACCESS_TOKEN
+def --env load-secret [name: string, env_var: string] {
+    let result = (do { ^get-secret $name } | complete)
+    if $result.exit_code == 0 {
+        load-env { ($env_var): ($result.stdout | str trim) }
+    }
+}
+
+if (which get-secret | is-not-empty) {
+    load-secret "github_token" "GITHUB_PERSONAL_ACCESS_TOKEN"
+}
 
 # should be at end of file
 source ~/.zoxide.nu
