@@ -108,15 +108,17 @@ $env.config.completions.external = {
 source ~/.cache/carapace/init.nu
 
 def --env load-secret [name: string, env_var: string] {
-    let result = (do { ^get-secret $name } | complete)
-    if $result.exit_code == 0 {
-        load-env { ($env_var): ($result.stdout | str trim) }
+    # Call get-secret by absolute path so this works regardless of PATH ordering.
+    let bin = ($env.HOME | path join ".local/bin/get-secret")
+    if ($bin | path exists) {
+        let result = (do { ^$bin $name } | complete)
+        if $result.exit_code == 0 {
+            load-env { ($env_var): ($result.stdout | str trim) }
+        }
     }
 }
 
-if (which get-secret | is-not-empty) {
-    load-secret "github_token" "GITHUB_PERSONAL_ACCESS_TOKEN"
-}
+load-secret "github_token" "GITHUB_PERSONAL_ACCESS_TOKEN"
 
 # should be at end of file
 source ~/.zoxide.nu
