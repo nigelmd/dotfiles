@@ -87,17 +87,18 @@ $env.config.completions.external = {
         if $parsed == null or ($parsed | is-empty) { return null }
         $parsed | each {|row|
             let v = ($row | get --optional value)
-            if $v != null and (($v | describe) starts-with 'string') and ('"' in $v) {
-                # carapace 1.6.5 bridge bug: values for paths containing spaces come
-                # back with embedded `"` chars, e.g. `~"/Library/Application Support/"`
-                # (tilde paths) or `"/Users/foo/Application Support/"` (absolute paths).
-                # Strip the quotes, expand `~`, then re-wrap in nushell single quotes
-                # if the path still contains a space so nushell parses it as one arg.
-                # Trade-off: a filename that legitimately contains `"` would also be
-                # cleaned (vanishingly rare on Unix).
-                let cleaned = ($v | str replace --all '"' '' | path expand --no-symlink)
+            # carapace (1.7.0) emits tilde paths with the `~` outside the quotes, e.g.
+            # `~"/Library/Application Support/"`. Nushell parses neither that nor
+            # `"~/Library/Application Support"` -- only an expanded, quoted path works.
+            # So expand the tilde first, then quote. Everything else carapace quotes
+            # is already valid nushell (absolute paths, names with `&`) and is left
+            # alone -- rewriting those turned relative paths into quoted absolute ones.
+            if $v != null and (($v | describe) starts-with 'string') and ($v | str starts-with '~') and ('"' in $v) {
+                # carapace appends a trailing space to signal a finished completion
+                let trailing = if ($v | str ends-with ' ') { ' ' } else { '' }
+                let cleaned = ($v | str replace --all '"' '' | str trim | path expand --no-symlink)
                 let quoted = if (' ' in $cleaned) { $"'($cleaned)'" } else { $cleaned }
-                $row | upsert value $quoted
+                $row | upsert value $"($quoted)($trailing)"
             } else {
                 $row
             }

@@ -12,7 +12,6 @@
       "Bash(grep:*)"
     ]
   },
-  "model": "opus[1m]",
   "hooks": {
     "Notification": [
       {
@@ -40,6 +39,7 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "tui": "fullscreen",
   "theme": "dark-ansi",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
