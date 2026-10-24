@@ -9,28 +9,7 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 DO_BACKUP=false
 [[ "${1:-}" == "--backup" ]] && DO_BACKUP=true
 
-# src-in-repo  ->  dst-relative-to-$HOME
-MAPPINGS=(
-  ".tmux.conf|.tmux.conf"
-  ".zshrc|.zshrc"
-  ".wezterm.lua|.wezterm.lua"
-  ".config/starship.toml|.config/starship.toml"
-  ".config/sesh|.config/sesh"
-  ".config/nvim|.config/nvim"
-  "bin/get-secret|.local/bin/get-secret"
-  "bin/theme|.local/bin/theme"
-  "bin/pick-agent|.local/bin/pick-agent"
-  ".claude/settings.json|.claude/settings.json"
-  ".claude/CLAUDE.md|.claude/CLAUDE.md"
-  ".claude/statusline-command.sh|.claude/statusline-command.sh"
-  ".claude/themes|.claude/themes"
-)
-# nushell dest is OS-aware
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  MAPPINGS+=(".config/nushell/config.nu|Library/Application Support/nushell/config.nu")
-else
-  MAPPINGS+=(".config/nushell/config.nu|.config/nushell/config.nu")
-fi
+source "$DOTFILES_DIR/links.sh"
 
 for entry in "${MAPPINGS[@]}"; do
   src="${entry%%|*}"

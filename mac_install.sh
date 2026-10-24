@@ -91,6 +91,10 @@ if ! $LINKS_ONLY; then
   fi
 fi
 
+# Claude Code writes a machine-specific, repo-harvested autoMode block into the
+# user settings file. Keep it out of the repo: the clean filter drops it on add.
+git -C "$DOTFILES_DIR" config filter.stripAutoMode.clean 'jq "del(.autoMode)"'
+
 # Symlink dotfiles into $HOME. Existing real files at destinations are
 # backed up with a timestamp before being replaced by the symlink. Each
 # call is idempotent and safe to re-run.
@@ -112,28 +116,10 @@ link_into_home() {
   echo "Linked $src -> $dst_full"
 }
 
-link_into_home ".tmux.conf"                    ".tmux.conf"
-link_into_home ".zshrc"                        ".zshrc"
-link_into_home ".wezterm.lua"                  ".wezterm.lua"
-link_into_home ".config/starship.toml"         ".config/starship.toml"
-link_into_home ".config/sesh"                  ".config/sesh"
-link_into_home ".config/nvim"                  ".config/nvim"
-link_into_home "bin/get-secret"                ".local/bin/get-secret"
-link_into_home "bin/theme"                     ".local/bin/theme"
-link_into_home "bin/pick-agent"                ".local/bin/pick-agent"
-link_into_home ".claude/settings.json"         ".claude/settings.json"
-link_into_home ".claude/CLAUDE.md"             ".claude/CLAUDE.md"
-link_into_home ".claude/statusline-command.sh" ".claude/statusline-command.sh"
-link_into_home ".claude/themes"                ".claude/themes"
-# seed the live-reloaded Claude theme; bin/theme rewrites it on toggle
-[ -e "$HOME/.claude/themes/current.json" ] || cp "$HOME/.claude/themes/mocha.json" "$HOME/.claude/themes/current.json"
+source "$DOTFILES_DIR/links.sh"
+for entry in "${MAPPINGS[@]}"; do
+  link_into_home "${entry%%|*}" "${entry##*|}"
+done
 
-# Nushell config — OS-aware destination (macOS doesn't follow XDG)
-case "$(uname -s)" in
-  Darwin)
-    link_into_home ".config/nushell/config.nu" "Library/Application Support/nushell/config.nu"
-    ;;
-  *)
-    link_into_home ".config/nushell/config.nu" ".config/nushell/config.nu"
-    ;;
-esac
+# seed the theme file and the live-reloaded Claude theme through the one writer
+[ -f "$HOME/.config/theme" ] || "$HOME/.local/bin/theme" mocha

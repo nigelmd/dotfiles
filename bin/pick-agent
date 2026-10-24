@@ -2,21 +2,25 @@
 # pick-agent — fzf list of tmux panes running claude or codex; jump to the chosen one.
 # Claude sets the pane title to "✳ <conversation>", so the rows read well.
 # Runs inside `tmux display-popup -E`, so switch-client targets the popup's client.
+
+# Every process in a pane shares its tty, so join ps to list-panes on the tty: any
+# launcher depth works (shell -> claude, doppler run -- claude, claude as the pane).
+# Field 1 is the jump target as $id:win.pane (session ids have no spaces, names may).
 list() {
-  tmux list-panes -a -F $'#{pane_pid}\t#{session_name}:#{window_index}.#{pane_index}\t#{pane_title}\t#{pane_current_path}' |
-    while IFS=$'\t' read -r pid target title path; do
-      kids=$(pgrep -d, -P "$pid") || continue
-      cmd=$(ps -o args= -p "$kids" 2>/dev/null)
-      case "$cmd" in
-        *claude*) tag=claude ;;
-        *codex*) tag=codex ;;
-        *) continue ;;
-      esac
-      printf '%s\t%s\t%s\t%s\n' "$target" "$tag" "$title" "${path/#$HOME/~}"
-    done
+  awk -F'\t' -v home="$HOME" '
+    NR == FNR {
+      tty = $0; sub(/^ +/, "", tty); sub(/ .*/, "", tty)
+      cmd = $0; sub(/^ *[^ ]+ +/, "", cmd); sub(/.*\//, "", cmd)
+      if (cmd == "claude" || cmd == "codex") agent["/dev/" tty] = cmd
+      next
+    }
+    $1 in agent { sub("^" home, "~", $5); print $2 "\t" $3 "\t" agent[$1] "\t" $4 "\t" $5 }
+  ' <(ps -axo tty=,comm=) \
+    <(tmux list-panes -a -F $'#{pane_tty}\t#{session_id}:#{window_index}.#{pane_index}\t#{session_name}\t#{pane_title}\t#{pane_current_path}')
 }
+
 [ "$1" = --list ] && { list; exit; }
-sel=$(list | column -ts $'\t' | fzf --no-sort --ansi --border-label ' agents ' --prompt '✳  ' \
-  --header 'claude / codex panes' | awk '{print $1}')
+sel=$(list | column -ts $'\t' | fzf --no-sort --ansi --with-nth 2.. --border-label ' agents ' \
+  --prompt '✳  ' --header 'claude / codex panes' | awk '{print $1}')
 [ -z "$sel" ] && exit 0
 tmux switch-client -t "${sel%%:*}" && tmux select-window -t "${sel%.*}" && tmux select-pane -t "$sel"

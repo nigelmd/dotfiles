@@ -38,75 +38,63 @@ config.macos_fullscreen_extend_behind_notch = false
 config.allow_square_glyphs_to_overflow_width = "Always" -- or consider "Always"
 
 -- THEME ----------------------------------------------------------------------
--- ~/.config/theme (latte|mocha) is the source of truth, written by
+-- ~/.config/theme (latte|mocha) is the single source of truth, written by
 -- ~/.local/bin/theme. That script also re-themes tmux and announces the flavor
--- to every attached wezterm as a user var, which travels through ssh. Falls
--- back to the OS appearance when the file does not exist yet.
+-- to every attached wezterm as a user var, which travels through ssh. This
+-- config is re-evaluated whenever the file changes.
 local HOME = os.getenv("HOME")
+local THEME_FILE = HOME .. "/.config/theme"
+local THEME_BIN = HOME .. "/.local/bin/theme"
 local SCHEMES = { latte = "Catppuccin Latte", mocha = "Catppuccin Mocha" }
 
 local function read_flavor()
-	local f = io.open(HOME .. "/.config/theme")
+	local f = io.open(THEME_FILE)
+	local s = f and f:read("*l")
 	if f then
-		local s = f:read("*l")
 		f:close()
-		if SCHEMES[s] then
-			return s
-		end
 	end
-	local ok, appearance = pcall(function()
-		return wezterm.gui.get_appearance()
-	end)
-	return (ok and appearance and appearance:find("Dark")) and "mocha" or "latte"
+	return SCHEMES[s] and s or "mocha"
 end
 
-local function theme_overrides(flavor)
-	local name = SCHEMES[flavor]
-	local s = wezterm.color.get_builtin_schemes()[name]
-	local tab_bar = s.tab_bar
-	-- active tab blends into the pane, like the old hardcoded mocha values did
-	tab_bar.active_tab = { bg_color = s.background, fg_color = s.foreground }
-	return {
-		color_scheme = name,
-		colors = { tab_bar = tab_bar },
-		window_frame = {
-			border_top_height = "30px",
-			border_left_color = s.background,
-			border_right_color = s.background,
-			border_bottom_color = s.background,
-			border_top_color = s.background,
-		},
-	}
+wezterm.add_to_config_reload_watch_list(THEME_FILE)
+config.color_scheme = SCHEMES[read_flavor()]
+local scheme = wezterm.color.get_builtin_schemes()[config.color_scheme]
+-- the scheme's own tab bar, except the active tab blends into the pane
+config.colors = { tab_bar = scheme.tab_bar }
+config.colors.tab_bar.active_tab = { bg_color = scheme.background, fg_color = scheme.foreground }
+config.window_frame = {
+	border_top_height = "30px",
+	border_left_color = scheme.background,
+	border_right_color = scheme.background,
+	border_bottom_color = scheme.background,
+	border_top_color = scheme.background,
+}
+
+-- pcall: the script is missing until dotfiles are linked on this machine
+local function run_theme(arg)
+	pcall(wezterm.run_child_process, { THEME_BIN, arg })
 end
 
-local function apply(flavor)
-	for _, w in ipairs(wezterm.gui.gui_windows()) do
-		w:set_config_overrides(theme_overrides(flavor))
-	end
-	wezterm.GLOBAL.theme = flavor
-	-- keep this machine's file/tmux/nvim in step; idempotent, so no ping-pong
-	wezterm.run_child_process({ HOME .. "/.local/bin/theme", flavor })
-end
-local initial = theme_overrides(read_flavor())
-config.color_scheme = initial.color_scheme
-config.colors = initial.colors
-config.window_frame = initial.window_frame
-
+-- tmux announced a flavor: write it through the script unless the file already
+-- says so (stops ping-pong), then re-read the config. The explicit reload covers
+-- the case where the file watch above does not fire.
 wezterm.on("user-var-changed", function(window, pane, name, value)
 	if name == "THEME" and SCHEMES[value] then
-		apply(value)
+		if value ~= read_flavor() then
+			run_theme(value)
+		end
+		wezterm.reload_configuration()
 	end
 end)
 
--- CMD+SHIFT+T: inside tmux or ssh, forward Option+t so the tmux host drives and
--- tells us back; otherwise toggle locally.
+-- CMD+SHIFT+T: a pane carrying a THEME user var is attached to a tmux running
+-- this system (local or over ssh), so forward Option+t and let it drive; else toggle here.
 wezterm.on("toggle-theme", function(window, pane)
-	local proc = (pane:get_foreground_process_name() or ""):match("[^/]+$") or ""
-	if proc == "tmux" or proc == "ssh" then
+	if pane:get_user_vars().THEME then
 		window:perform_action(act.SendKey({ key = "t", mods = "ALT" }), pane)
 	else
-		local cur = wezterm.GLOBAL.theme or read_flavor()
-		apply(cur == "mocha" and "latte" or "mocha")
+		run_theme("toggle")
+		wezterm.reload_configuration()
 	end
 end)
 -------------------------------------------------------------------------------

@@ -1,30 +1,33 @@
 #!/bin/bash
 # theme — single source of truth for latte/mocha. Writes ~/.config/theme, then
-# re-themes tmux and tells every attached wezterm (local or over ssh) via an
-# OSC 1337 user var. nvim and the Claude statusline watch the file.
+# re-themes tmux and announces the flavor to every attached wezterm (local or
+# over ssh) via an OSC 1337 user var. wezterm and nvim watch the file; Claude
+# Code live-reloads ~/.claude/themes/current.json.
 set -e
 FILE="$HOME/.config/theme"
 cur=$(cat "$FILE" 2>/dev/null || echo mocha)
 case "${1:-toggle}" in
   latte|mocha) new=$1 ;;
   toggle) if [ "$cur" = mocha ]; then new=latte; else new=mocha; fi ;;
-  get) echo "$cur"; exit 0 ;;
-  push) new=$cur ;;   # re-announce current theme (used on tmux client-attached)
-  *) echo "usage: theme [latte|mocha|toggle|get]" >&2; exit 2 ;;
+  push) new=$cur ;; # announce only (tmux client-attached hook)
+  *) echo "usage: theme [latte|mocha|toggle|push]" >&2; exit 2 ;;
 esac
-# idempotent: wezterm's user-var handler calls back into us, this stops the loop
-[ "$new" = "$cur" ] && [ "${1:-toggle}" != toggle ] && [ "$1" != push ] && exit 0
-mkdir -p "$(dirname "$FILE")"
-echo "$new" > "$FILE"
-# Claude Code reloads custom theme files live, so running sessions follow the toggle
-[ -f "$HOME/.claude/themes/$new.json" ] && cp "$HOME/.claude/themes/$new.json" "$HOME/.claude/themes/current.json"
+tmux info >/dev/null 2>&1 && in_tmux=1 || in_tmux=
 
-if tmux info >/dev/null 2>&1; then
-  if [ "$1" != push ]; then
-    # catppuccin sets @thm_* with -o (never overwrite), so unset before re-sourcing
-    tmux show -g | awk '/^@thm_/{print $1}' | xargs -n1 tmux set -gu
-    tmux source-file ~/.tmux.conf
+if [ "$new" != "$cur" ] || [ ! -f "$FILE" ]; then
+  mkdir -p "$(dirname "$FILE")"
+  echo "$new" > "$FILE"
+  [ -f "$HOME/.claude/themes/$new.json" ] && cp "$HOME/.claude/themes/$new.json" "$HOME/.claude/themes/current.json"
+  if [ -n "$in_tmux" ]; then
+    tmux set -g @catppuccin_flavor "$new"
+    # catppuccin sets @thm_* with -o (never overwrite): unset them, then let the
+    # plugin reload them. Everything else in .tmux.conf reads @thm_* at render time.
+    tmux show -g | awk '/^@thm_/{print "set -gu", $1}' | tmux source-file -
+    ~/.tmux/plugins/tmux/catppuccin.tmux
   fi
+fi
+
+if [ -n "$in_tmux" ]; then
   b64=$(printf %s "$new" | base64)
   for tty in $(tmux list-clients -F '#{client_tty}'); do
     printf '\033]1337;SetUserVar=THEME=%s\007' "$b64" > "$tty" 2>/dev/null || true

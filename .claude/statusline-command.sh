@@ -4,6 +4,7 @@ input=$(cat)
 
 # ── data ────────────────────────────────────────────────────────────────────
 cwd=$(echo "$input" | jq -r '.workspace.current_dir')
+read -r flavor 2>/dev/null < "$HOME/.config/theme" || flavor=mocha
 model_full=$(echo "$input" | jq -r '.model.display_name')
 ctx_used=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 worktree_raw=$(echo "$input" | jq -r '.workspace.git_worktree // empty')
@@ -39,7 +40,7 @@ fi
 
 # ── palette: ~/.config/theme is written by ~/.local/bin/theme ───────────────
 RESET="\033[0m"
-if [ "$(cat "$HOME/.config/theme" 2>/dev/null)" = latte ]; then
+if [ "$flavor" = latte ]; then
   MAUVE="\033[38;2;136;57;239m"    # cwd / folder
   SKY="\033[38;2;4;165;229m"       # git branch
   GREEN="\033[38;2;64;160;43m"     # model / ctx 0-50%
