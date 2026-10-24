@@ -70,9 +70,20 @@ config.window_frame = {
 	border_top_color = scheme.background,
 }
 
--- pcall: the script is missing until dotfiles are linked on this machine
+-- Runs the script (file, tmux, nvim, Claude on this machine). Until dotfiles are
+-- linked here the script is missing, so fall back to writing the file directly.
 local function run_theme(arg)
-	pcall(wezterm.run_child_process, { THEME_BIN, arg })
+	local ok, success = pcall(wezterm.run_child_process, { THEME_BIN, arg })
+	if ok and success then
+		return
+	end
+	local cur = read_flavor()
+	local new = SCHEMES[arg] and arg or (cur == "mocha" and "latte" or "mocha")
+	local f = io.open(THEME_FILE, "w")
+	if f then
+		f:write(new, "\n")
+		f:close()
+	end
 end
 
 -- tmux announced a flavor: write it through the script unless the file already
