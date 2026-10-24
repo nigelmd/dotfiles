@@ -2,7 +2,11 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "onedark_vivid",
+      colorscheme = function()
+        local theme = require("config.theme")
+        theme.apply()
+        theme.watch()
+      end,
     },
   },
   {

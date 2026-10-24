@@ -44,6 +44,13 @@ $env.NVM_DIR = $NVM_DIR
 alias gs = git status
 # alias claude = ~/.claude/local/claude
 
+# Claude Code omits the Grep and Glob tools unless they are named at launch.
+# Theme follows ~/.config/theme; the custom themes fix the unreadable fullscreen selection.
+def --wrapped claude [...args] {
+  let flavor = (^theme get)
+  ^claude --allowedTools Grep Glob --settings $'{"theme":"custom:($flavor)"}' ...$args
+}
+
 # alias fzz = [] { fzf --preview 'bat --style=numbers --color=always {}' | lines | each { |file| nvim $file } }
 # alias fzz = fzf --preview 'bat --style=numbers --color=always {}' | str trim | xargs -n 1 nvim
 # def fzz [] { fzf --ansi --preview 'bat --style=numbers --color=always {}' | str trim | nvim $in }

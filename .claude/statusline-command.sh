@@ -1,5 +1,5 @@
 #!/bin/bash
-# Catppuccin Macchiato statusline for Claude Code
+# Catppuccin statusline for Claude Code; palette follows ~/.config/theme (latte|mocha)
 input=$(cat)
 
 # ── data ────────────────────────────────────────────────────────────────────
@@ -37,16 +37,27 @@ else
   esac
 fi
 
-# ── Catppuccin Macchiato palette (24-bit truecolor) ──────────────────────────
+# ── palette: ~/.config/theme is written by ~/.local/bin/theme ───────────────
 RESET="\033[0m"
-MAUVE="\033[38;2;198;160;246m"    # cwd / folder
-SKY="\033[38;2;145;215;227m"      # git branch
-GREEN="\033[38;2;166;218;149m"    # model / ctx 0-50%
-YELLOW="\033[38;2;238;212;159m"   # worktree / ctx 50-75%
-PEACH="\033[38;2;245;169;127m"    # ctx 75-90%
-RED="\033[38;2;237;135;150m"      # dirty marker / ctx 90-100%
-SURFACE2="\033[38;2;91;96;120m"   # ctx bar empty cells
-SUBTEXT="\033[38;2;165;173;203m"  # separators / brackets
+if [ "$(cat "$HOME/.config/theme" 2>/dev/null)" = latte ]; then
+  MAUVE="\033[38;2;136;57;239m"    # cwd / folder
+  SKY="\033[38;2;4;165;229m"       # git branch
+  GREEN="\033[38;2;64;160;43m"     # model / ctx 0-50%
+  YELLOW="\033[38;2;223;142;29m"   # worktree / ctx 50-75%
+  PEACH="\033[38;2;254;100;11m"    # ctx 75-90%
+  RED="\033[38;2;210;15;57m"       # dirty marker / ctx 90-100%
+  SURFACE2="\033[38;2;172;176;190m" # ctx bar empty cells
+  SUBTEXT="\033[38;2;92;95;119m"   # separators / brackets
+else # mocha
+  MAUVE="\033[38;2;203;166;247m"
+  SKY="\033[38;2;137;220;235m"
+  GREEN="\033[38;2;166;227;161m"
+  YELLOW="\033[38;2;249;226;175m"
+  PEACH="\033[38;2;250;179;135m"
+  RED="\033[38;2;243;139;168m"
+  SURFACE2="\033[38;2;88;91;112m"
+  SUBTEXT="\033[38;2;166;173;200m"
+fi
 
 # ── assemble segments ────────────────────────────────────────────────────────
 

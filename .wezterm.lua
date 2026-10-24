@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
@@ -25,11 +26,9 @@ config.font = wezterm.font_with_fallback({
 })
 
 config.keys = {
-	{
-		key = "Enter",
-		mods = "CMD",
-		action = wezterm.action.ToggleFullScreen,
-	},
+	{ key = "Enter", mods = "CMD", action = act.ToggleFullScreen },
+	-- toggle latte <-> mocha; see THEME section below
+	{ key = "T", mods = "CMD|SHIFT", action = act.EmitEvent("toggle-theme") },
 }
 
 -- dont use the stupid MacOS Spaces and start the rows below the stupid notch
@@ -38,28 +37,79 @@ config.macos_fullscreen_extend_behind_notch = false
 
 config.allow_square_glyphs_to_overflow_width = "Always" -- or consider "Always"
 
-config.colors = {
-	tab_bar = {
-		active_tab = {
-			bg_color = "#1E1E2E", -- Example background color
-			fg_color = "#f8f8f2", -- Example foreground color
-		},
-		-- You can also define colors for other tab states like:
-		inactive_tab = {
-			bg_color = "#000000",
-			fg_color = "#000000",
-		},
-		inactive_tab_hover = {
-			bg_color = "#1E1E2E", -- Example background color
-			fg_color = "#f8f8f2", -- Example foreground color
-		},
-		-- new_tab = { ... },
-		-- new_tab_hover = { ... },
-	},
-}
+-- THEME ----------------------------------------------------------------------
+-- ~/.config/theme (latte|mocha) is the source of truth, written by
+-- ~/.local/bin/theme. That script also re-themes tmux and announces the flavor
+-- to every attached wezterm as a user var, which travels through ssh. Falls
+-- back to the OS appearance when the file does not exist yet.
+local HOME = os.getenv("HOME")
+local SCHEMES = { latte = "Catppuccin Latte", mocha = "Catppuccin Mocha" }
 
--- color_scheme
-config.color_scheme = "Catppuccin Mocha"
+local function read_flavor()
+	local f = io.open(HOME .. "/.config/theme")
+	if f then
+		local s = f:read("*l")
+		f:close()
+		if SCHEMES[s] then
+			return s
+		end
+	end
+	local ok, appearance = pcall(function()
+		return wezterm.gui.get_appearance()
+	end)
+	return (ok and appearance and appearance:find("Dark")) and "mocha" or "latte"
+end
+
+local function theme_overrides(flavor)
+	local name = SCHEMES[flavor]
+	local s = wezterm.color.get_builtin_schemes()[name]
+	local tab_bar = s.tab_bar
+	-- active tab blends into the pane, like the old hardcoded mocha values did
+	tab_bar.active_tab = { bg_color = s.background, fg_color = s.foreground }
+	return {
+		color_scheme = name,
+		colors = { tab_bar = tab_bar },
+		window_frame = {
+			border_top_height = "30px",
+			border_left_color = s.background,
+			border_right_color = s.background,
+			border_bottom_color = s.background,
+			border_top_color = s.background,
+		},
+	}
+end
+
+local function apply(flavor)
+	for _, w in ipairs(wezterm.gui.gui_windows()) do
+		w:set_config_overrides(theme_overrides(flavor))
+	end
+	wezterm.GLOBAL.theme = flavor
+	-- keep this machine's file/tmux/nvim in step; idempotent, so no ping-pong
+	wezterm.run_child_process({ HOME .. "/.local/bin/theme", flavor })
+end
+local initial = theme_overrides(read_flavor())
+config.color_scheme = initial.color_scheme
+config.colors = initial.colors
+config.window_frame = initial.window_frame
+
+wezterm.on("user-var-changed", function(window, pane, name, value)
+	if name == "THEME" and SCHEMES[value] then
+		apply(value)
+	end
+end)
+
+-- CMD+SHIFT+T: inside tmux or ssh, forward Option+t so the tmux host drives and
+-- tells us back; otherwise toggle locally.
+wezterm.on("toggle-theme", function(window, pane)
+	local proc = (pane:get_foreground_process_name() or ""):match("[^/]+$") or ""
+	if proc == "tmux" or proc == "ssh" then
+		window:perform_action(act.SendKey({ key = "t", mods = "ALT" }), pane)
+	else
+		local cur = wezterm.GLOBAL.theme or read_flavor()
+		apply(cur == "mocha" and "latte" or "mocha")
+	end
+end)
+-------------------------------------------------------------------------------
 
 config.hide_tab_bar_if_only_one_tab = true
 
@@ -102,16 +152,6 @@ end)
 
 -- Optional: Adjust window frame borders for a more integrated look.
 -- You can customize colors to match your theme.
-config.window_frame = {
-	-- border_left_width = "1px",
-	-- border_right_width = "1px",
-	-- border_bottom_height = "1px",
-	border_top_height = "30px", -- Set to 0 to remove the top border and integrate tabs fully.
-	border_left_color = "#1E1E2E",
-	border_right_color = "#1E1E2E",
-	border_bottom_color = "#1E1E2E",
-	border_top_color = "#1E1E2E",
-}
 
 -- Finally, return the configuration to wezterm:
 return config

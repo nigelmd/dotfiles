@@ -1,0 +1,5 @@
+{
+  "name": "Catppuccin Mocha selection",
+  "base": "dark",
+  "overrides": { "selectionBg": "#585b70" }
+}

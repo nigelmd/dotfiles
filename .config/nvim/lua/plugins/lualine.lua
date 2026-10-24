@@ -6,14 +6,17 @@ return {
   opts = function(_, opts)
     local auto = require("lualine.themes.auto")
 
-    local colors = require("catppuccin.palettes").get_palette("mocha")
+    -- palette follows ~/.config/theme; colors are functions so lualine re-reads them on each refresh
+    local function colors()
+      return require("catppuccin.palettes").get_palette(require("config.theme").flavor())
+    end
 
     local function separator()
       return {
         function()
           return "│"
         end,
-        color = { fg = colors.surface0, bg = "NONE", gui = "bold" },
+        color = function() return { fg = colors().surface0, bg = "NONE", gui = "bold" } end,
         padding = { left = 0, right = 0 },
       }
     end
@@ -57,16 +60,16 @@ return {
       lualine_b = {
         {
           custom_branch,
-          color = { fg = colors.green, bg = "none" },
+          color = function() return { fg = colors().green, bg = "none" } end,
           padding = { left = 1, right = 1 },
         },
         {
           "diff",
           colored = true,
           diff_color = {
-            added = { fg = colors.teal, bg = "none", gui = "bold" },
-            modified = { fg = colors.yellow, bg = "none", gui = "bold" },
-            removed = { fg = colors.red, bg = "none", gui = "bold" },
+            added = function() return { fg = colors().teal, bg = "none", gui = "bold" } end,
+            modified = function() return { fg = colors().yellow, bg = "none", gui = "bold" } end,
+            removed = function() return { fg = colors().red, bg = "none", gui = "bold" } end,
           },
           source = nil,
           padding = { left = 0, right = 1 },
@@ -85,7 +88,7 @@ return {
             unnamed = "[?]",
             newfile = "[!]",
           },
-          color = { fg = colors.blue, bg = "none" },
+          color = function() return { fg = colors().blue, bg = "none" } end,
           padding = { left = 1, right = 1 },
         },
         {
@@ -95,19 +98,19 @@ return {
           diagnostics_color = {
             error = function()
               local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-              return { fg = (count == 0) and colors.green or colors.red, bg = "none", gui = "bold" }
+              return { fg = (count == 0) and colors().green or colors().red, bg = "none", gui = "bold" }
             end,
             warn = function()
               local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-              return { fg = (count == 0) and colors.green or colors.yellow, bg = "none", gui = "bold" }
+              return { fg = (count == 0) and colors().green or colors().yellow, bg = "none", gui = "bold" }
             end,
             info = function()
               local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
-              return { fg = (count == 0) and colors.green or colors.blue, bg = "none", gui = "bold" }
+              return { fg = (count == 0) and colors().green or colors().blue, bg = "none", gui = "bold" }
             end,
             hint = function()
               local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-              return { fg = (count == 0) and colors.green or colors.teal, bg = "none", gui = "bold" }
+              return { fg = (count == 0) and colors().green or colors().teal, bg = "none", gui = "bold" }
             end,
           },
           symbols = {
@@ -139,7 +142,7 @@ return {
 
             return string.format(" %d/%d", current_index, total)
           end,
-          color = { fg = colors.yellow, bg = "none" },
+          color = function() return { fg = colors().yellow, bg = "none" } end,
           padding = { left = 1, right = 1 },
         },
       },
@@ -149,7 +152,7 @@ return {
           "filetype",
           icon_only = true,
           colored = false,
-          color = { fg = colors.blue, bg = "none" },
+          color = function() return { fg = colors().blue, bg = "none" } end,
           padding = { left = 1, right = 1 },
         },
       },
@@ -157,7 +160,7 @@ return {
         separator(),
         {
           "location",
-          color = { fg = colors.red, bg = "none" },
+          color = function() return { fg = colors().red, bg = "none" } end,
           padding = { left = 1, right = 1 },
         },
       },

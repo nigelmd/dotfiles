@@ -62,6 +62,11 @@ if ! $LINKS_ONLY; then
   cp "$HOME/vscode_operator_mono_lig/fonts/"*.otf "$HOME/Library/Fonts/" 2>/dev/null || true
   cp "$HOME/vscode_operator_mono_lig/fonts/"*.ttf "$HOME/Library/Fonts/" 2>/dev/null || true
 
+  # oh-my-zsh: zsh stays the login shell (ssh lands here); .zshrc is symlinked from the repo
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
+
   # Starship init for nushell — auto-generated, not symlinked
   if command -v starship &> /dev/null; then
     mkdir -p "$HOME/Library/Application Support/nushell/vendor/autoload"
@@ -108,14 +113,18 @@ link_into_home() {
 }
 
 link_into_home ".tmux.conf"                    ".tmux.conf"
+link_into_home ".zshrc"                        ".zshrc"
 link_into_home ".wezterm.lua"                  ".wezterm.lua"
 link_into_home ".config/starship.toml"         ".config/starship.toml"
 link_into_home ".config/sesh"                  ".config/sesh"
 link_into_home ".config/nvim"                  ".config/nvim"
 link_into_home "bin/get-secret"                ".local/bin/get-secret"
+link_into_home "bin/theme"                     ".local/bin/theme"
+link_into_home "bin/pick-agent"                ".local/bin/pick-agent"
 link_into_home ".claude/settings.json"         ".claude/settings.json"
 link_into_home ".claude/CLAUDE.md"             ".claude/CLAUDE.md"
 link_into_home ".claude/statusline-command.sh" ".claude/statusline-command.sh"
+link_into_home ".claude/themes"                ".claude/themes"
 
 # Nushell config — OS-aware destination (macOS doesn't follow XDG)
 case "$(uname -s)" in

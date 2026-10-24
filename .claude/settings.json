@@ -12,6 +12,7 @@
       "Bash(grep:*)"
     ]
   },
+  "model": "claude-fable-5-1[1m]",
   "hooks": {
     "Notification": [
       {
@@ -35,13 +36,61 @@
     "superpowers@superpowers-marketplace": true,
     "clangd-lsp@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "tui": "fullscreen",
-  "theme": "dark-ansi",
+  "theme": "auto",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: NumeralHQ (GitHub org; repo github.com:NumeralHQ/wtt.git)",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: unverified — gh visibility check returned \"not queryable here\"; treat as possibly public: scope commits/pushes to this repo as for a public repo (only this repo's own work belongs here)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Doppler (secrets supplied via \"doppler run\"; never from files; config/*.yml contain no secrets); CI secret referenced: GITHUB_TOKEN",
+      "**Default / protected branches**: main (default); protected-branch/ruleset status not queryable here — do not assume unprotected",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: The trusted repo (github.com:NumeralHQ/wtt.git) and its remote only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: config/prod.yml (prod configuration/profile file); docs/superpowers/plans/2026-07-04-map-prod-vs-rooftop-overlay.md (prod-related planning doc); .env (gitignored, local secrets) — share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace/host/container whose name carries 'prod' or 'production' as a whole word or segment — includes this repo's WTT_PROFILE=prod runs and config/prod.yml",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic (prod/production segment match, e.g. WTT_PROFILE=prod)",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries 'prod' or 'production' as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Python/FastAPI service, WTT repo)",
+      "**Trusted repo**: /Users/nigel/work/wtt (github.com:NumeralHQ/wtt.git) — visibility unverified, treat as possibly public",
+      "**Org-specific CLIs**: uv, doppler (seen routinely in this project's transcripts); uvx and fzf also observed",
+      "routine under /Users/nigel/work/wtt/ prefix: uv run / uv sync / doppler run commands from project root"
+    ],
+    "allow": [
+      "$defaults",
+      "Bash(uv run:*) in /Users/nigel/work/wtt",
+      "Bash(uv sync) in /Users/nigel/work/wtt"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(doppler run -- *WTT_PROFILE=prod*) in /Users/nigel/work/wtt",
+      "Writes to config/prod.yml in /Users/nigel/work/wtt"
+    ]
+  }
 }

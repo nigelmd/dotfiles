@@ -1,0 +1,5 @@
+{
+  "name": "Catppuccin Latte selection",
+  "base": "light",
+  "overrides": { "selectionBg": "#acb0be" }
+}
