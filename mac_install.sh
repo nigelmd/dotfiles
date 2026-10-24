@@ -125,6 +125,8 @@ link_into_home ".claude/settings.json"         ".claude/settings.json"
 link_into_home ".claude/CLAUDE.md"             ".claude/CLAUDE.md"
 link_into_home ".claude/statusline-command.sh" ".claude/statusline-command.sh"
 link_into_home ".claude/themes"                ".claude/themes"
+# seed the live-reloaded Claude theme; bin/theme rewrites it on toggle
+[ -e "$HOME/.claude/themes/current.json" ] || cp "$HOME/.claude/themes/mocha.json" "$HOME/.claude/themes/current.json"
 
 # Nushell config — OS-aware destination (macOS doesn't follow XDG)
 case "$(uname -s)" in

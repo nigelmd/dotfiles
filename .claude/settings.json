@@ -50,7 +50,7 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "tui": "fullscreen",
-  "theme": "auto",
+  "theme": "custom:current",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
   "skipAutoPermissionPrompt": true,

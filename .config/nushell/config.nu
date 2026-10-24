@@ -45,11 +45,8 @@ alias gs = git status
 # alias claude = ~/.claude/local/claude
 
 # Claude Code omits the Grep and Glob tools unless they are named at launch.
-# Theme follows ~/.config/theme; the custom themes fix the unreadable fullscreen selection.
-def --wrapped claude [...args] {
-  let flavor = (^theme get)
-  ^claude --allowedTools Grep Glob --settings $'{"theme":"custom:($flavor)"}' ...$args
-}
+# (theme: settings.json uses custom:current, which ~/.local/bin/theme rewrites on toggle)
+def --wrapped claude [...args] { ^claude --allowedTools Grep Glob ...$args }
 
 # alias fzz = [] { fzf --preview 'bat --style=numbers --color=always {}' | lines | each { |file| nvim $file } }
 # alias fzz = fzf --preview 'bat --style=numbers --color=always {}' | str trim | xargs -n 1 nvim

@@ -46,3 +46,6 @@ docs/
 
 # nvim plugin lock — let each machine pin its own plugin versions
 .config/nvim/lazy-lock.json
+
+# machine state written by bin/theme (copy of latte.json or mocha.json)
+.claude/themes/current.json

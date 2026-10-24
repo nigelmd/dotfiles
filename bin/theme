@@ -16,6 +16,8 @@ esac
 [ "$new" = "$cur" ] && [ "${1:-toggle}" != toggle ] && [ "$1" != push ] && exit 0
 mkdir -p "$(dirname "$FILE")"
 echo "$new" > "$FILE"
+# Claude Code reloads custom theme files live, so running sessions follow the toggle
+[ -f "$HOME/.claude/themes/$new.json" ] && cp "$HOME/.claude/themes/$new.json" "$HOME/.claude/themes/current.json"
 
 if tmux info >/dev/null 2>&1; then
   if [ "$1" != push ]; then
