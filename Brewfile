@@ -1,4 +1,3 @@
-tap "dopplerhq/cli"
 tap "jandedobbeleer/oh-my-posh"
 tap "jesseduffield/lazydocker"
 tap "oven-sh/bun"
@@ -59,7 +58,7 @@ brew "uv"
 brew "vivid"
 brew "wget"
 brew "zoxide"
-brew "dopplerhq/cli/doppler", link: false
+brew "doppler"
 brew "jesseduffield/lazydocker/lazydocker"
 brew "oven-sh/bun/bun"
 cask "codex"

@@ -27,6 +27,10 @@ if ! $LINKS_ONLY; then
 
   # Install Brewfile dependencies
   echo "Installing Brewfile dependencies..."
+  # Homebrew ignores third-party taps until they are trusted (Tap-Trust, 2026)
+  if brew trust --help >/dev/null 2>&1; then
+    awk -F'"' '/^tap /{print $2}' "$DOTFILES_DIR/Brewfile" | xargs -n1 brew trust
+  fi
   brew bundle --file="$DOTFILES_DIR/Brewfile"
 
   # For mermaid diagrams which is used by LazyVim
@@ -34,7 +38,8 @@ if ! $LINKS_ONLY; then
     mkdir -p "$HOME/.npm-global"
     npm config set prefix "$HOME/.npm-global"
     export PATH="$HOME/.npm-global/bin:$PATH"
-    npm install -g @mermaid-js/mermaid-cli
+    # npm blocks puppeteer's postinstall (Chromium download) unless allowed
+    npm install -g --allow-scripts=puppeteer @mermaid-js/mermaid-cli
   else
     echo "npm not found, skipping mermaid-cli install"
   fi
@@ -44,6 +49,7 @@ if ! $LINKS_ONLY; then
     git clone https://gitlab.com/dwt1/shell-color-scripts.git "$HOME/shell-color-scripts"
   fi
   cd "$HOME/shell-color-scripts"
+  sudo mkdir -p /usr/local/bin # absent on a fresh Apple Silicon Mac; the Makefile copies into it
   sudo make install
   cd "$DOTFILES_DIR"
 
