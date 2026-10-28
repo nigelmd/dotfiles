@@ -48,10 +48,12 @@ if ! $LINKS_ONLY; then
   if [ ! -d "$HOME/shell-color-scripts" ]; then
     git clone https://gitlab.com/dwt1/shell-color-scripts.git "$HOME/shell-color-scripts"
   fi
-  cd "$HOME/shell-color-scripts"
-  sudo mkdir -p /usr/local/bin # absent on a fresh Apple Silicon Mac; the Makefile copies into it
-  sudo make install
-  cd "$DOTFILES_DIR"
+  # upstream's make install wants sudo, /opt and /usr/local/bin (a Linux layout);
+  # instead point the CLI at the clone and put it in ~/.local/bin like the other tools
+  mkdir -p "$HOME/.local/bin"
+  sed "s|/opt/shell-color-scripts/colorscripts|$HOME/shell-color-scripts/colorscripts|" \
+    "$HOME/shell-color-scripts/colorscript.sh" > "$HOME/.local/bin/colorscript"
+  chmod +x "$HOME/.local/bin/colorscript"
 
   # Clone nu_scripts for nushell themes
   if [ ! -d "$HOME/.config/nu_scripts" ]; then

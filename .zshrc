@@ -1,4 +1,5 @@
 # zsh is the login shell (ssh lands here); interactive work happens in nushell.
+export PATH="$HOME/.local/bin:$PATH" # theme, pick-agent, colorscript, claude
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git)
