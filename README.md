@@ -3,7 +3,6 @@
 ## Prerequisites
 
 - macOS (Apple Silicon)
-- Node.js (for mermaid-cli used by LazyVim)
 
 ## For Mac
 

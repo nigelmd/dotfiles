@@ -37,6 +37,7 @@ brew "luarocks"
 brew "make"
 brew "minikube"
 brew "neovim"
+brew "node" # mermaid-cli for LazyVim, claude/codex installers
 brew "ninja"
 brew "nmap"
 brew "nushell"
