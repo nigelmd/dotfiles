@@ -24,6 +24,10 @@ if [ "$new" != "$cur" ] || [ ! -f "$FILE" ]; then
     # plugin reload them. Everything else in .tmux.conf reads @thm_* at render time.
     tmux show -g | awk '/^@thm_/{print "set -gu", $1}' | tmux source-file -
     ~/.tmux/plugins/tmux/catppuccin.tmux
+    # codex probes the terminal background once at startup and never again
+    # (openai/codex#18942), so a running codex keeps the old flavor until restarted.
+    panes=$(~/.local/bin/pick-agent --list | awk -F"\t" '$3 == "codex" {print $2}' | sort -u | paste -sd, -)
+    [ -n "$panes" ] && tmux display-message -d 6000 "codex needs a restart to pick up $new: $panes"
   fi
 fi
 
